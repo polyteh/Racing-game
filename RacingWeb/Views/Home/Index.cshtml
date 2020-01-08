@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+    <div class="card-group">
+        <div class="card">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Components manager</h5>
+                <p class="card-text">Create, modify or delete car components</p>
+                <a href="@Url.Action("Index", "Components")" class="btn btn-primary">Manage components</a>
+                @*<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>*@
+            </div>
+        </div>
+        <div class="card">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Car workshop</h5>
+                <p class="card-text">Create, modify or delete cars</p>
+                <a href="@Url.Action("Index", "RacingCar")" class="btn btn-primary">Manage cars</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Racing</h5>
+                <p class="card-text">Start race</p>
+                <a href="#" class="btn btn-primary">Button</a>
+            </div>
+        </div>
+    </div>
