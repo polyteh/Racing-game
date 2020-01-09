@@ -1,0 +1,32 @@
+﻿@model RacingWeb.Models.SelectSimpleCarsView
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Car Selector</h2>
+@using (Html.BeginForm())
+{
+    <table class="table">
+
+        <tr>
+            <th></th>
+        </tr>
+
+        @for (int i = 0; i < Model.CarList.Count(); i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => modelItem.CarList[i].Id)
+                    @Html.HiddenFor(modelItem => modelItem.CarList[i].Name)
+                    @Html.CheckBoxFor(modelItem => modelItem.CarList[i].IsSelected, new { @class = "custom-checkbox" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.CarList[i].Name)
+                </td>
+            </tr>
+        }
+
+    </table>
+    <input type="submit" class="btn btn-outline-primary rounded-0" value="Submit" />
+}

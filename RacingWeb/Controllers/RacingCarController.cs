@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace RacingWeb.Controllers
 {
+    //create, edit and delete recing cars; cars managment
     public class RacingCarController : Controller
     {
         private readonly IRacingCarService _racingCarService;

@@ -1,0 +1,26 @@
+﻿@model RacingWeb.Models.SelectSimpleCarsView
+
+<div>
+    <h4>SelectSimpleCarsView</h4>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+</div>
+<p>
+    <table class="table">
+
+        <tr>
+            <th>Car name</th>
+        </tr>
+
+        @for (int i = 0; i < Model.CarList.Count(); i++)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.CarList[i].Name)
+                </td>
+            </tr>
+        }
+
+    </table>
+</p>

@@ -151,13 +151,18 @@
     <Compile Include="Controllers\ComponentsController.cs" />
     <Compile Include="Controllers\EngineController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MakeRaceController.cs" />
+    <Compile Include="Controllers\RaceCarsSelectorController.cs" />
     <Compile Include="Controllers\RacingCarController.cs" />
+    <Compile Include="Controllers\RacingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BrakeView.cs" />
     <Compile Include="Models\EngineView.cs" />
     <Compile Include="Models\RacingCarView.cs" />
+    <Compile Include="Models\SelectSimpleCarsView.cs" />
+    <Compile Include="Models\SimpleCarForSelectorView.cs" />
     <Compile Include="Models\SuspentionView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -168,10 +173,12 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Images\Car workshop.png" />
     <Content Include="Images\Engine.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Parts.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -288,8 +295,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Engine\Details.cshtml" />
     <Content Include="Views\Engine\Index.cshtml" />
@@ -310,6 +315,10 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\RaceCarsSelector\Index.cshtml" />
+    <Content Include="Views\MakeRace\Index.cshtml" />
+    <Content Include="Views\MakeRace\CarListPartial.cshtml" />
+    <Content Include="Views\Racing\Index.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
