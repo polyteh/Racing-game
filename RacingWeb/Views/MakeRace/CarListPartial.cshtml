@@ -17,6 +17,7 @@
         {
             <tr>
                 <td>
+                    @Html.HiddenFor(modelItem => modelItem.CarList[i].Id)
                     @Html.DisplayFor(modelItem => modelItem.CarList[i].Name)
                 </td>
             </tr>

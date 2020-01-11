@@ -19,7 +19,13 @@ namespace RacingWeb.Controllers
         {
             SelectSimpleCarsView carsToRace = new SelectSimpleCarsView();
             carsToRace = TempData["RaceCarList"] as SelectSimpleCarsView;
+            TempData.Keep("RaceCarList");
             return PartialView(carsToRace);
+        }
+        //как правильно сюда получить список из CarListPartial()? можно через TempData, но это костыль
+        [HttpGet]
+        public void StartRace()
+        { 
         }
     }
 }

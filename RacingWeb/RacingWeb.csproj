@@ -160,6 +160,7 @@
     </Compile>
     <Compile Include="Models\BrakeView.cs" />
     <Compile Include="Models\EngineView.cs" />
+    <Compile Include="Models\RaceView.cs" />
     <Compile Include="Models\RacingCarView.cs" />
     <Compile Include="Models\SelectSimpleCarsView.cs" />
     <Compile Include="Models\SimpleCarForSelectorView.cs" />
@@ -182,6 +183,8 @@
     <Content Include="Images\Engine.png" />
     <Content Include="Images\Parts.png" />
     <Content Include="Images\Race.png" />
+    <Content Include="Images\RaceResults.png" />
+    <Content Include="Images\Start_race.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />

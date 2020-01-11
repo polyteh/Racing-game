@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace RacingWeb.Controllers
 {
+    //controller to choose action between make race and view results
     public class RacingController : Controller
     {
         // GET: Racing
