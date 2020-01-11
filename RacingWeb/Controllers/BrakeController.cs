@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Ninject;
 using RacingDTO.Interfaces;
+using RacingDTO.Models;
 using RacingWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -43,39 +44,43 @@ namespace RacingWeb.Controllers
 
         // POST: Brake/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(BrakeView newBrake)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                var newBLBrake = _mapper.Map<BrakeDTO>(newBrake);
+                await _brakeService.CreateAsync(newBLBrake);
                 return RedirectToAction("Index");
             }
-            catch
+            else
             {
-                return View();
+                ViewBag.Message = "Not Valid";
+                return View(newBrake);
             }
         }
 
         // GET: Brake/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var brakeDTO = await _brakeService.FindByIdAsync(id);
+            var brakeView = _mapper.Map<BrakeView>(brakeDTO);
+            return View(brakeView);
         }
 
         // POST: Brake/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(BrakeView editBrake)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                var newBLBrake = _mapper.Map<BrakeDTO>(editBrake);
+                await _brakeService.UpdateAsync(newBLBrake);
                 return RedirectToAction("Index");
             }
-            catch
+            else
             {
-                return View();
+                ViewBag.Message = "Not Valid";
+                return View(editBrake);
             }
         }
 

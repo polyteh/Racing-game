@@ -1,32 +1,55 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<html lang="zxx">
+<head>
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="wrap">
+        <div class="card-group">
+            <div class="card">
+                <img src="~/Images/Parts.png" class="card-img-top itemPicture" alt="Engine" onclick="showComponents()">
+                <div class="card-body">
+                    <h5 class="card-title">Components manager</h5>
+                    <p class="card-text">Create, modify or delete car components</p>
+                    <div class="btn btn-lg btn-block btn-primary mt-auto" onclick="showComponents()">Manage components</div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="~/Images/Car workshop.png" class="card-img-top itemPicture" alt="Workshop" onclick="showCars()">
+                <div class="card-body">
+                    <h5 class="card-title">Car workshop</h5>
+                    <p class="card-text">Create, modify or delete cars</p>
+                    <div class="btn btn-lg btn-block btn-primary mt-auto" onclick="showCars()">Manage cars</div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="~/Images/Race.png" class="card-img-top itemPicture" alt="Race" onclick="showRace()">
+                <div class="card-body">
+                    <h5 class="card-title">Racing center</h5>
+                    <p class="card-text">Manage racing</p>
+                    <div class="btn btn-lg btn-block btn-primary mt-auto" onclick="showRace()">Manage racing</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
+<script type="text/javascript">
+function showComponents() {
+        location.href = '@Url.Action("Index", "Components")';
+        }
+</script>
+<script type="text/javascript">
+function showCars() {
+        location.href = '@Url.Action("Index", "RacingCar")';
+        }
+</script>
+<script type="text/javascript">
+function showRace() {
+        location.href = '@Url.Action("Index", "Racing")';
+        }
+</script>
 
-<div class="card-group">
-    <div class="card">
-        <img src="~/Images/Parts.png" class="card-img-top" alt="Engine">
-        <div class="card-body">
-            <h5 class="card-title">Components manager</h5>
-            <p class="card-text">Create, modify or delete car components</p>
-            <a href="@Url.Action("Index", "Components")" class="btn btn-primary">Manage components</a>
-            @*<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>*@
-        </div>
-    </div>
-    <div class="card">
-        <img src="~/Images/Car workshop.png" class="card-img-top" alt="Engine">
-        <div class="card-body">
-            <h5 class="card-title">Car workshop</h5>
-            <p class="card-text">Create, modify or delete cars</p>
-            <a href="@Url.Action("Index", "RacingCar")" class="btn btn-primary">Manage cars</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Racing center</h5>
-            <p class="card-text">Manage racing</p>
-            <a href="@Url.Action("Index", "Racing")" class="btn btn-primary">Manage racing</a>
-        </div>
-    </div>
-</div>

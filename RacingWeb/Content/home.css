@@ -1,0 +1,24 @@
+﻿
+.wrap {
+    color: blue;
+}
+.container_column {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+.itemPicture {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+
+}
+
+.itemText {
+    width: 100%;
+    height: 5vh;
+    object-fit: cover;
+}
+.itemButton {
+    height: 10vh;
+}

@@ -2,27 +2,30 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Components manager</h2>
-
-<div class="card-group">
-    <div class="card">
-        <img src="~/Images/Engine.png" class="card-img-top" alt="Engine">
-        <div class="card-body">
-            <h5 class="card-title">Engine</h5>
-            <p class="card-text">Create, modify, delete engines</p>
-            <a href="@Url.Action("Index", "Engine")" class="btn btn-primary">Manage engines</a>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+<html lang="zxx">
+<head>
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h2>Components manager</h2>
+    <div class="card-group">
+        <div class="card">
+            <img src="~/Images/Engine.png" class="card-img-top itemPicture" alt="Engine">
+            <div class="card-body">
+                <h5 class="card-title">Engines</h5>
+                <p class="card-text">Create, modify, delete engines</p>
+                <a href="@Url.Action("Index", "Engine")" class="btn btn-primary">Manage engines</a>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Brakes</h5>
-            <p class="card-text">Create, modify, delete brakes</p>
-            <a href="@Url.Action("Index", "Brake")" class="btn btn-primary">Button</a>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <div class="card">
+            <img src="~/Images/Brakes.png" class="card-img-top itemPicture" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Brakes</h5>
+                <p class="card-text">Create, modify, delete brakes</p>
+                <a href="@Url.Action("Index", "Brake")" class="btn btn-primary">Manage breakes</a>
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
+</body>
+</html>

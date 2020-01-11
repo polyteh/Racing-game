@@ -173,12 +173,15 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Images\Car workshop.png" />
-    <Content Include="Images\Engine.png" />
+    <Content Include="Content\home.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Brakes.png" />
+    <Content Include="Images\Car workshop.png" />
+    <Content Include="Images\Engine.png" />
     <Content Include="Images\Parts.png" />
+    <Content Include="Images\Race.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -319,6 +322,8 @@
     <Content Include="Views\MakeRace\Index.cshtml" />
     <Content Include="Views\MakeRace\CarListPartial.cshtml" />
     <Content Include="Views\Racing\Index.cshtml" />
+    <Content Include="Views\Brake\Edit.cshtml" />
+    <Content Include="Views\Brake\Create.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
