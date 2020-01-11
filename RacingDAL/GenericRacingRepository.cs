@@ -25,6 +25,24 @@ namespace RacingDAL
             _dbSet.Add(item);
             await _context.SaveChangesAsync();
         }
+        private bool disposed = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
 
         public virtual async Task<TEntity> FindByIdAsync(int id)
         {

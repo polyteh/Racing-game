@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace RacingDAL.Interfaces
 {
-    public interface IGeneralDBRepository<TEntity> where TEntity : class, IEntity
+    public interface IGeneralDBRepository<TEntity>:IDisposable 
+        where TEntity : class, IEntity
     {
             Task CreateAsync(TEntity item);
             Task<TEntity> FindByIdAsync(int id);

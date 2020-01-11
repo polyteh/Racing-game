@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace RacingDTO.Services
 {
-    public abstract class GenericService<DTOModel, DALModel> : IGenericRacingService<DTOModel>
-        where DTOModel:class
-        where DALModel:class, IEntity
+    public abstract class GenericService<DTOModel, DALModel> : IGenericRacingService<DTOModel>, IDisposable
+        where DTOModel : class
+        where DALModel : class, IEntity
     {
-        protected  IMapper _mapper;
+        protected IMapper _mapper;
         private readonly IGeneralDBRepository<DALModel> _repository;
         public GenericService(IGeneralDBRepository<DALModel> rep)
         {
@@ -57,5 +57,10 @@ namespace RacingDTO.Services
 
         public abstract IEnumerable<DTOModel> Map(IEnumerable<DALModel> entity);
         public abstract IEnumerable<DALModel> Map(IEnumerable<DTOModel> entity);
+
+        public void Dispose()
+        {
+            _repository.Dispose();
+        }
     }
 }
