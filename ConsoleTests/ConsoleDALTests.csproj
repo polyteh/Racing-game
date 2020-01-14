@@ -65,6 +65,10 @@
       <Project>{b36f0704-f5e8-4f9c-ada9-e2910f009945}</Project>
       <Name>RacingDAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RacingDTO\RacingDTO.csproj">
+      <Project>{80C164F9-51F9-483E-9C45-5607140572AB}</Project>
+      <Name>RacingDTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

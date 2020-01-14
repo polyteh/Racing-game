@@ -23,5 +23,14 @@ namespace RacingDAL
         {
             return await _dbSet.Include(x => x.Engine).Include(x => x.Brake).Include(x => x.Suspention).ToListAsync();
         }
+        public override IEnumerable<RacingCar> GetAll()
+        {
+            return _dbSet.Include(x => x.Engine).Include(x => x.Brake).Include(x => x.Suspention).ToList();
+        }
+        public override RacingCar FindById(int id)
+        {
+            var itemBuId =  _dbSet.Include(x => x.Engine).Include(x => x.Brake).Include(x => x.Suspention).SingleOrDefault<RacingCar>(e => e.Id == id);
+            return itemBuId;
+        }
     }
 }

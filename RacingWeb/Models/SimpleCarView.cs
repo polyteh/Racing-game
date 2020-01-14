@@ -5,7 +5,7 @@ using System.Web;
 
 namespace RacingWeb.Models
 {
-    public class SimpleCarForSelectorView
+    public class SimpleCarView
     {
         public int Id { get; set; }
         public string Name { get; set; }

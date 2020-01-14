@@ -46,8 +46,8 @@ namespace RacingDAL
 
         public virtual async Task<TEntity> FindByIdAsync(int id)
         {
-            var itemBuId = await _dbSet.SingleOrDefaultAsync<TEntity>(e=>e.Id==id);
-            return itemBuId;
+            var itemById = await _dbSet.SingleOrDefaultAsync<TEntity>(e=>e.Id==id);
+            return itemById;
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -73,6 +73,17 @@ namespace RacingDAL
                 _context.Entry<TEntity>(itemBuId).CurrentValues.SetValues(item);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public virtual IEnumerable<TEntity> GetAll()
+        {
+            return  _dbSet.ToList();
+        }
+
+        public virtual TEntity FindById(int id)
+        {
+            var itemById =  _dbSet.SingleOrDefault<TEntity>(e => e.Id == id);
+            return itemById;
         }
     }
 }

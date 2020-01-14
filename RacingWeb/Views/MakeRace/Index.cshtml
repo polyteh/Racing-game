@@ -9,6 +9,15 @@
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
         @*<input type="submit" value="Create" class="btn btn-default" />*@
-        <a href="@Url.Action("StartRace", "MakeRace")" class="btn btn-primary">Start race</a>
+        <input type="button" onclick="StartRace()" value="StartRace" />
     </div>
 </div>
+
+<script type="text/jscript">
+        function StartRace() {
+            $.get("/MakeRace/StartRace");
+        };
+</script>
+@*<p>
+    <input type="button" onclick="CreateMergeReport()" value="Create" />
+</p>*@

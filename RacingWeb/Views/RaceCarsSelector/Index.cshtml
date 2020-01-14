@@ -1,4 +1,5 @@
-﻿@model RacingWeb.Models.SelectSimpleCarsView
+﻿
+@model IList<RacingWeb.Models.SimpleCarView>
 
 @{
     ViewBag.Title = "Index";
@@ -7,22 +8,21 @@
 <h2>Car Selector</h2>
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
     <table class="table">
-
         <tr>
             <th></th>
         </tr>
-
-        @for (int i = 0; i < Model.CarList.Count(); i++)
+        @for (var i = 0; i < Model.Count; i++)
         {
             <tr>
                 <td>
-                    @Html.HiddenFor(modelItem => modelItem.CarList[i].Id)
-                    @Html.HiddenFor(modelItem => modelItem.CarList[i].Name)
-                    @Html.CheckBoxFor(modelItem => modelItem.CarList[i].IsSelected, new { @class = "custom-checkbox" })
+                    @Html.HiddenFor(modelItem => modelItem[i].Id)
+                    @Html.HiddenFor(modelItem => modelItem[i].Name)
+                    @Html.CheckBoxFor(modelItem => modelItem[i].IsSelected, new { @class = "custom-checkbox" })
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => modelItem.CarList[i].Name)
+                    @Html.DisplayFor(modelItem => modelItem[i].Name)
                 </td>
             </tr>
         }

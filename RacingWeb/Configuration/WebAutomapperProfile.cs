@@ -15,7 +15,8 @@ namespace RacingWeb.Configuration
             CreateMap<BrakeView, BrakeDTO>().ReverseMap();
             CreateMap<SuspentionView, SuspentionDTO>().ReverseMap();
             CreateMap<RacingCarView, RacingCarDTO>().ReverseMap();
-            CreateMap<SimpleCarForSelectorView, RacingCarDTO>().ReverseMap();
+            CreateMap<SimpleCarView, RacingCarDTO>().ReverseMap();
+            CreateMap<RaceView, RaceDTO>().ReverseMap();
         }
     }
 }

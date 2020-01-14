@@ -26,28 +26,24 @@ namespace RacingWeb.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            var listDTOCars = await _racingCarService.GetAllAsync();
-            SelectSimpleCarsView listSimpleViewCars = new SelectSimpleCarsView();
-            listSimpleViewCars.CarList= _mapper.Map<IEnumerable<SimpleCarForSelectorView>>(listDTOCars).ToList();
-            return View(listSimpleViewCars);
+            var listDTOCars = await _racingCarService.GetAllAsync();    
+            var simpleCarList= _mapper.Map<IEnumerable<SimpleCarView>>(listDTOCars).ToList();
+            return View(simpleCarList);
         }
         [HttpPost]
-        public ActionResult Index(SelectSimpleCarsView selectionCarList)
+        public ActionResult Index(IEnumerable<SimpleCarView> selectionCarList)
         {
             //save selection list to transfer to another controller
-            SelectSimpleCarsView selectedCarsOnly = new SelectSimpleCarsView();
-            List<SimpleCarForSelectorView> selectedCarList = new List<SimpleCarForSelectorView>();
-            foreach (var item in selectionCarList.CarList)
+            List<SimpleCarView> selectedCarsOnly = new List<SimpleCarView>();
+            foreach (var item in selectionCarList)
             {
                 if (item.IsSelected)
                 {
-                    selectedCarList.Add(item);
+                    selectedCarsOnly.Add(item);
                 }
             }
-            selectedCarsOnly.CarList = selectedCarList;
             TempData["RaceCarList"] = selectedCarsOnly;
             return RedirectToAction("Index", "MakeRace");
-
         }
     }
 }

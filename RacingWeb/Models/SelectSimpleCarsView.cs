@@ -7,6 +7,6 @@ namespace RacingWeb.Models
 {
     public class SelectSimpleCarsView
     {
-        public List<SimpleCarForSelectorView> CarList { get; set; }
+        public List<SimpleCarView> CarList { get; set; }
     }
 }
