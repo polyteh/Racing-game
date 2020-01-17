@@ -21,8 +21,27 @@ namespace RacingDTO.RaceWorkerEngine
         {
             _newRace = newRace;
             CarNormalization();
-            var t = newRace;
+            Task[] carsInTheRace = new Task[_newRace.CarList.Count()];
+            //foreach (IRacingCarWorker item in newRace.CarList)
+            //{
+            //    item.GetRaceConfiguration(new RaceConfiguration());
+            //   // item.Move();
+            //}
 
+            //сделать Move асинхронно
+            var tasks = _newRace.CarList.Select(car => Task.Run(() => car.Move())).ToList();
+
+
+            Parallel.For(0, _newRace.CarList.Count(), (i) =>
+            {
+                carsInTheRace[i] = new Task(() =>
+                {
+                    _newRace.CarList[i].GetRaceConfiguration(new RaceConfiguration());
+                    _newRace.CarList[i].Move();
+                });
+            });
+
+            Parallel.ForEach(carsInTheRace, task => task.Start());
         }
 
         public void StopRace()
@@ -34,7 +53,6 @@ namespace RacingDTO.RaceWorkerEngine
             NormilizeEngines();
             NormilizeBrakes();
             NormilizeSuspention();
-
         }
         private void NormilizeEngines()
         {

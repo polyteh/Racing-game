@@ -327,7 +327,6 @@
     <Content Include="Views\Racing\Index.cshtml" />
     <Content Include="Views\Brake\Edit.cshtml" />
     <Content Include="Views\Brake\Create.cshtml" />
-    <Content Include="Views\MakeRace\CarListPartial1.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

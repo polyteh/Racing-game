@@ -17,9 +17,9 @@ namespace RacingWeb.Controllers
         private readonly IBrakeService _brakeService;
         private readonly IMapper _mapper;
         [Inject]
-        public BrakeController(IBrakeService engineService, IMapper mapper)
+        public BrakeController(IBrakeService brakeService, IMapper mapper)
         {
-            _brakeService = engineService;
+            _brakeService = brakeService;
             _mapper = mapper;
         }
         // GET: Brake

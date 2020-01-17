@@ -1,12 +1,15 @@
-﻿using System;
+﻿using RacingDTO.RaceWorkerEngine.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RacingDTO.RaceWorkerEngine.Models
 {
-    public class RacingCarWorker
+    public class RacingCarWorker : IRacingCarWorker
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,37 +20,48 @@ namespace RacingDTO.RaceWorkerEngine.Models
         public int SuspentionId { get; set; }
         public SuspentionWorker Suspention { get; set; }
 
-        private int _curDistanceCovered = 0;
+        private double _curDistanceCovered;
         private int _curEngineTemp = 30;
-        private readonly RaceConfiguration _curRaceConfiguration;
-        private bool hasOverheatingPenalty = false;
-        private int curBreakingFromOverheatingNumber=0;
-        private static readonly int _tempTresholdLimit = 5;
-        private static readonly int _tempIncreaseAccel = 3;
-        private static readonly int _tempIncreaseHold = 1;
-        private static readonly int _tempDecreaseBrake = -2;
-        private static readonly int MaxBreakingFromOverheatingNumber = 5;
+        private RaceConfiguration _curRaceConfiguration;
+        private bool _hasOverheatingPenalty = false;
+        private int _curBreakingFromOverheatingNumber = 0;
 
 
-        public RacingCarWorker(RaceConfiguration raceConfiguration)
+
+        public void GetRaceConfiguration(RaceConfiguration raceConfiguration)
         {
             _curRaceConfiguration = raceConfiguration;
         }
         private void Accelerate()
         {
-            this._curEngineTemp += _tempIncreaseAccel;
+            //_curDistanceCovered += 10;
+            double distanceTraveled = 10* ((0.5 + this.Engine.NormilizedHP) + 0.5 * Convert.ToInt32(this.Engine.Turbine) + (0.5 + this.Suspention.NormilizedRigidityKoef)) *
+              (_curRaceConfiguration.TrackPercentageOfStraightLines - 0.5);
+            _curDistanceCovered += distanceTraveled;
+            Console.WriteLine($"Accelerate {distanceTraveled}");
+            this._curEngineTemp += CarConfiguration.TemperatureIncreaseAccel;
         }
         private void HoldSpeed()
         {
-            this._curEngineTemp += _tempIncreaseHold;
+           // _curDistanceCovered += 5;
+            double distanceTraveled = 7*((0.5 + this.Engine.NormilizedHP) * (1.5 - this.Engine.NormilizedHP));
+            _curDistanceCovered += distanceTraveled;
+            Console.WriteLine($"Hold speed {distanceTraveled}");
+            this._curEngineTemp += CarConfiguration.TemperatureIncreaseHoldSpeed;
         }
         private void Braking()
         {
-            this._curEngineTemp += _tempDecreaseBrake;
+            // _curDistanceCovered += 2;
+            _curDistanceCovered += 2;
+            double distanceTraveled = 6*((1.5 - this.Engine.NormilizedHP) + 0.5 * Convert.ToInt32(this.Engine.Turbine) + (0.5 + this.Suspention.NormilizedRigidityKoef)) *
+                (_curRaceConfiguration.TrackPercentageOfStraightLines - 0.5);
+            _curDistanceCovered += distanceTraveled;
+            Console.WriteLine($"Breaking {distanceTraveled}");
+            this._curEngineTemp += CarConfiguration.TemperatureIncreaseBrake;
         }
         private bool isFinished()
         {
-            if (_curRaceConfiguration.TracDistance > _curDistanceCovered)
+            if (_curRaceConfiguration.TrackDistance > _curDistanceCovered)
             {
                 return false;
             }
@@ -55,24 +69,76 @@ namespace RacingDTO.RaceWorkerEngine.Models
         }
         private bool isEngineNearOverheated()
         {
+            if (this._curEngineTemp >= CarConfiguration.MaxEngineTemperature - CarConfiguration.TemperatureTresholdLimit)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool isFailure()
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+            int failtureChance = random.Next(1, _curRaceConfiguration.FailtureChance + 1);
+            if (failtureChance == _curRaceConfiguration.FailtureChance)
+            {
+                return true;
+            }
             return false;
         }
         public void Move()
         {
-            Random random = new Random(DateTime.Now.Millisecond);
-            int actionNumber = random.Next(1, CarBehaviourWorker.TotalActionWeight+1);
-            if (actionNumber<=CarBehaviourWorker.Acceleration)
+            Thread countThread = Thread.CurrentThread;
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            do
             {
-                Accelerate();
-            }
-            else if ((actionNumber > CarBehaviourWorker.Acceleration)&&(actionNumber<=(CarBehaviourWorker.TotalActionWeight-CarBehaviourWorker.Braking)))
-            {
-                HoldSpeed();
-            }
-            else
-            {
-                Braking();
-            }
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Car {this.Name} on the thread { countThread.ManagedThreadId}");
+                Console.ForegroundColor = ConsoleColor.White;
+                if (isFailure())
+                {
+                    Console.WriteLine($"ПОЛОМАЛАСЯ!! АЙ-АЙ");
+                    break;
+                }
+                if (isEngineNearOverheated())
+                {
+                    for (int i = 0; i < CarConfiguration.MaxBrakingAfterOverheating; i++)
+                    {
+                        Console.WriteLine($"Breaking due to overheating {i}\t ");
+                        Braking();
+                        if (isFinished())
+                        {
+                            break;
+                        }
+                    }
+                    Console.WriteLine($"Engine temperature after braking {_curEngineTemp}\t ");
+                }
+                else
+                {
+                    Random random = new Random(DateTime.Now.Millisecond);
+                    int actionNumber = random.Next(1, CarBehaviourWorker.TotalActionWeight + 1);
+                    if (actionNumber <= CarBehaviourWorker.Acceleration)
+                    {
+                        Console.WriteLine($"action number is {actionNumber}\t Accel");
+                        Accelerate();
+                    }
+                    else if ((actionNumber > CarBehaviourWorker.Acceleration) && (actionNumber <= (CarBehaviourWorker.TotalActionWeight - CarBehaviourWorker.Braking)))
+                    {
+                        Console.WriteLine($"action number is {actionNumber}\t Hold");
+                        HoldSpeed();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"action number is {actionNumber}\t Brake");
+                        Braking();
+                    }
+                    Console.WriteLine($"Engine temperature {this._curEngineTemp}");
+                }
+
+                Thread.Sleep(100);
+            } while (!isFinished());
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ninject;
 using RacingDAL.Interfaces;
 using RacingDAL.Models;
 using RacingDTO.Interfaces;
@@ -18,6 +19,7 @@ namespace RacingDTO.Services
     {
         protected IMapper _mapper;
         private readonly IGeneralDBRepository<RacingCar> _repository;
+        [Inject]
         public RaceService(IGeneralDBRepository<RacingCar> rep, IMapper mapper)
         {
             _repository = rep;

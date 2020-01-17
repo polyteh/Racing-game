@@ -1,8 +1,14 @@
-﻿using RacingDAL;
+﻿using AutoMapper;
+using Ninject;
+using Ninject.Modules;
+using RacingDAL;
 using RacingDAL.Interfaces;
 using RacingDAL.Models;
+using RacingDTO.Configuration;
 using RacingDTO.Interfaces;
+using RacingDTO.Models;
 using RacingDTO.Services;
+using RacingWeb.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,10 +42,25 @@ namespace ConsoleTests
 
             ////IGeneralDBRepository<Suspention> suspentionRepo = new GenericRacingRepository<Suspention>(new RacingDBContext());
             ///
-;
+            //NinjectGlobalConfiguration.Configure();
+            var modules = new INinjectModule[]
+             {
+                    new WebNinjectConfiguration(),
+                    new DTONinjectConfiguration()
+             };
+            //make new kernel with ctor
+            var kernel = new StandardKernel(modules);
+            var raceService = kernel.Get<RaceService>();
+
+            List<RacingCarDTO> carList = new List<RacingCarDTO>() { new RacingCarDTO() { Id = 1 }, new RacingCarDTO() { Id = 2 } };
+            //List<RacingCarDTO> carList = new List<RacingCarDTO>() { new RacingCarDTO() { Id = 1 } };
+            RaceDTO newRace = new RaceDTO() { CarList = carList };
+            raceService.StartRace(newRace);
+
+
 
             Console.ReadKey();
         }
     }
-}
 
+}

@@ -8,5 +8,8 @@ namespace RacingDTO.RaceWorkerEngine.Interfaces
 {
     public interface IRacingCarWorker
     {
+        void Move();
+        void GetRaceConfiguration(RaceConfiguration raceConfiguration);
+
     }
 }
