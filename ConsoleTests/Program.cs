@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleTests
@@ -57,6 +58,9 @@ namespace ConsoleTests
             RaceDTO newRace = new RaceDTO() { CarList = carList };
             raceService.StartRace(newRace);
 
+            Thread.Sleep(5000);
+
+            raceService.GetRaceSatus();
 
 
             Console.ReadKey();

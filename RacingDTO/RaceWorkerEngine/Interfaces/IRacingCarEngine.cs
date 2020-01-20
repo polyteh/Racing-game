@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RacingDTO.RaceWorkerEngine.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace RacingDTO.RaceWorkerEngine.Interfaces
 {
-    public interface IRacingCarWorker
+    public interface IRacingCarEngine
     {
-        void Move(RaceConfiguration raceConfiguration);
-
+        void Move();
+        CarStatusWorker GetStatus();
     }
 }

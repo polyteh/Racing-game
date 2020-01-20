@@ -19,7 +19,7 @@ namespace RacingDTO.RaceWorkerEngine
         // chance to obtain speed up bonus
         private readonly int _speedUpChance;
 
-        public RaceConfiguration(double distance = 200.0, double trackPercentageOfStraightLines = 0.8, int failtureChance = 50, int speedUpChance=20)
+        public RaceConfiguration(double distance = 200.0, double trackPercentageOfStraightLines = 0.8, int failtureChance = 50, int speedUpChance=5)
         {
             _trackPercentageOfStraightLines = trackPercentageOfStraightLines;
             _trackLenght = distance;

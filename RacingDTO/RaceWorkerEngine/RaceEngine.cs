@@ -10,28 +10,22 @@ namespace RacingDTO.RaceWorkerEngine
 {
     public class RaceEngine : IRaceWorker
     {
-        private readonly RaceConfiguration _raceConfiguration;
+       // private readonly RaceConfiguration _raceConfiguration;
         RaceWorker _newRace;
         public RaceEngine()
         {
 
         }
-
         public void StartRace(RaceWorker newRace)
         {
             _newRace = newRace;
             CarNormalization();
             Task[] carsInTheRace = new Task[_newRace.CarList.Count()];
-            //foreach (IRacingCarWorker item in newRace.CarList)
-            //{
-            //    item.GetRaceConfiguration(new RaceConfiguration());
-            //   // item.Move();
-            //}
+
 
             //сделать Move асинхронно
             var tasks = _newRace.CarList.Select(car => Task.Run(() => {
-                car.GetRaceConfiguration(new RaceConfiguration());
-                car.Move(); })).ToList();
+                car.Move(new RaceConfiguration()); })).ToList();
 
 
             //Parallel.For(0, _newRace.CarList.Count(), (i) =>
@@ -43,13 +37,17 @@ namespace RacingDTO.RaceWorkerEngine
             //    });
             //});
             //Parallel.ForEach(carsInTheRace, task => task.Start());
-
-
         }
-
         public void StopRace()
         {
             throw new NotImplementedException();
+        }
+        public void GetStatus()
+        {
+            foreach (var item in _newRace.CarList)
+            {
+                var k=item.GetStatus();
+            }
         }
         private void CarNormalization()
         {

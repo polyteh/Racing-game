@@ -19,6 +19,7 @@ namespace RacingDTO.Services
     {
         protected IMapper _mapper;
         private readonly IGeneralDBRepository<RacingCar> _repository;
+        private IRaceWorker newRaceWorker;
         [Inject]
         public RaceService(IGeneralDBRepository<RacingCar> rep, IMapper mapper)
         {
@@ -27,7 +28,7 @@ namespace RacingDTO.Services
         }
         public void StartRace(RaceDTO newRace)
         {
-            IRaceWorker newRaceWorker = new RaceEngine();
+            newRaceWorker = new RaceEngine();
             GetCarsForRacing(newRace);
             var raceToStart = _mapper.Map<RaceWorker>(newRace);
             newRaceWorker.StartRace(raceToStart);
@@ -41,6 +42,11 @@ namespace RacingDTO.Services
                 fullCarList.Add(_mapper.Map<RacingCarDTO>(carToRace));
             }
             newRace.CarList = fullCarList;
+        }
+        public void GetRaceSatus()
+        {
+            newRaceWorker.GetStatus();
+        
         }
     }
 }

@@ -73,10 +73,13 @@
     <Compile Include="Models\SuspentionDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RaceWorkerEngine\Configuration\CarConfiguration.cs" />
+    <Compile Include="RaceWorkerEngine\Configuration\CarStatusMessageConfiguration.cs" />
     <Compile Include="RaceWorkerEngine\Interfaces\IRaceWorker.cs" />
+    <Compile Include="RaceWorkerEngine\Interfaces\IRacingCarEngine.cs" />
     <Compile Include="RaceWorkerEngine\Interfaces\IRacingCarWorker.cs" />
     <Compile Include="RaceWorkerEngine\Models\BrakeWorker.cs" />
     <Compile Include="RaceWorkerEngine\Configuration\CarBehaviourConfiguration.cs" />
+    <Compile Include="RaceWorkerEngine\Models\CarStatusWorker.cs" />
     <Compile Include="RaceWorkerEngine\Models\EngineWorker.cs" />
     <Compile Include="RaceWorkerEngine\Models\RaceWorker.cs" />
     <Compile Include="RaceWorkerEngine\RaceEngine.cs" />

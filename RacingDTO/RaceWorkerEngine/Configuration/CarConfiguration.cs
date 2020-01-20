@@ -13,12 +13,12 @@ namespace RacingDTO.RaceWorkerEngine
         //threshold limit for engine temperature check
         private static readonly int _tempTresholdLimit = 5;
         //temperature incriasing during acceleartion
-        private static readonly int _tempIncreaseAccel = 10;
-        private static readonly int _tempIncreaseAccelTurbo = 13;
-        private static readonly int _tempIncreaseHold = 5;
+        private static readonly int _tempIncreaseAccel = 5;
+        private static readonly int _tempIncreaseAccelTurbo = 7;
+        private static readonly int _tempIncreaseHold = 3;
         private static readonly int _tempDecreaseBrake = -3;
         private static readonly int _maxBrakingAfterOverheating = 5;
-        private static readonly int _maxAccelerateAfterSpeedUp = 3;
+        private static readonly int _maxAccelerateAfterSpeedUp = 2;
 
         public static int MaxEngineTemperature => _maxEngineTemperature;
         public static int TemperatureTresholdLimit => _tempTresholdLimit;

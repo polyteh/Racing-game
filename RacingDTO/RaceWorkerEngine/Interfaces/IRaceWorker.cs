@@ -11,5 +11,6 @@ namespace RacingDTO.RaceWorkerEngine.Interfaces
     {
         void StartRace(RaceWorker newRace);
         void StopRace();
+        void GetStatus();
     }
 }
