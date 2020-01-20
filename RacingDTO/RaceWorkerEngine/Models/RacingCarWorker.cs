@@ -24,7 +24,7 @@ namespace RacingDTO.RaceWorkerEngine.Models
         private int _curEngineTemp = 30;
         private RaceConfiguration _curRaceConfiguration;
         private bool _hasOverheatingPenalty = false;
-        private int _curBreakingFromOverheatingNumber = 0;
+
 
 
 
@@ -59,15 +59,15 @@ namespace RacingDTO.RaceWorkerEngine.Models
             Console.WriteLine($"Breaking {distanceTraveled}");
             this._curEngineTemp += CarConfiguration.TemperatureIncreaseBrake;
         }
-        private bool isFinished()
+        private bool IsFinished()
         {
-            if (_curRaceConfiguration.TrackDistance > _curDistanceCovered)
+            if (_curRaceConfiguration.TrackLenght > _curDistanceCovered)
             {
                 return false;
             }
             return true;
         }
-        private bool isEngineNearOverheated()
+        private bool IsEngineNearOverheated()
         {
             if (this._curEngineTemp >= CarConfiguration.MaxEngineTemperature - CarConfiguration.TemperatureTresholdLimit)
             {
@@ -75,11 +75,21 @@ namespace RacingDTO.RaceWorkerEngine.Models
             }
             return false;
         }
-        private bool isFailure()
+        private bool IsFailure()
         {
             Random random = new Random(DateTime.Now.Millisecond);
             int failtureChance = random.Next(1, _curRaceConfiguration.FailtureChance + 1);
             if (failtureChance == _curRaceConfiguration.FailtureChance)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool IsSpeedUp()
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+            int speedUpChance = random.Next(1, _curRaceConfiguration.SpeedUpChance + 1);
+            if (speedUpChance == _curRaceConfiguration.SpeedUpChance)
             {
                 return true;
             }
@@ -95,18 +105,18 @@ namespace RacingDTO.RaceWorkerEngine.Models
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Car {this.Name} on the thread { countThread.ManagedThreadId}");
                 Console.ForegroundColor = ConsoleColor.White;
-                if (isFailure())
+                if (IsFailure())
                 {
                     Console.WriteLine($"ПОЛОМАЛАСЯ!! АЙ-АЙ");
                     break;
                 }
-                if (isEngineNearOverheated())
+                if (IsEngineNearOverheated())
                 {
                     for (int i = 0; i < CarConfiguration.MaxBrakingAfterOverheating; i++)
                     {
                         Console.WriteLine($"Breaking due to overheating {i}\t ");
                         Braking();
-                        if (isFinished())
+                        if (IsFinished())
                         {
                             break;
                         }
@@ -136,7 +146,7 @@ namespace RacingDTO.RaceWorkerEngine.Models
                 }
 
                 Thread.Sleep(100);
-            } while (!isFinished());
+            } while (!IsFinished());
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
         }

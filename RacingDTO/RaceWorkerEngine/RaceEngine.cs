@@ -29,19 +29,22 @@ namespace RacingDTO.RaceWorkerEngine
             //}
 
             //сделать Move асинхронно
-            var tasks = _newRace.CarList.Select(car => Task.Run(() => car.Move())).ToList();
+            var tasks = _newRace.CarList.Select(car => Task.Run(() => {
+                car.GetRaceConfiguration(new RaceConfiguration());
+                car.Move(); })).ToList();
 
 
-            Parallel.For(0, _newRace.CarList.Count(), (i) =>
-            {
-                carsInTheRace[i] = new Task(() =>
-                {
-                    _newRace.CarList[i].GetRaceConfiguration(new RaceConfiguration());
-                    _newRace.CarList[i].Move();
-                });
-            });
+            //Parallel.For(0, _newRace.CarList.Count(), (i) =>
+            //{
+            //    carsInTheRace[i] = new Task(() =>
+            //    {
+            //        _newRace.CarList[i].GetRaceConfiguration(new RaceConfiguration());
+            //        _newRace.CarList[i].Move();
+            //    });
+            //});
+            //Parallel.ForEach(carsInTheRace, task => task.Start());
 
-            Parallel.ForEach(carsInTheRace, task => task.Start());
+
         }
 
         public void StopRace()

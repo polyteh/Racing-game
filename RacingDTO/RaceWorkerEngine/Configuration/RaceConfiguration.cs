@@ -12,19 +12,24 @@ namespace RacingDTO.RaceWorkerEngine
 
         //чем ближе к 1, тем больше на трассе прямых
         private readonly double _trackPercentageOfStraightLines;
-        private readonly double _trackDistance;
+        // track lenght
+        private readonly double _trackLenght;
+        // chance to get failture
         private readonly int _failtureChance;
+        // chance to obtain speed up bonus
+        private readonly int _speedUpChance;
 
-        public RaceConfiguration(double distance = 200.0, double trackPercentageOfStraightLines = 0.8, int failtureChance = 50)
+        public RaceConfiguration(double distance = 200.0, double trackPercentageOfStraightLines = 0.8, int failtureChance = 50, int speedUpChance=20)
         {
             _trackPercentageOfStraightLines = trackPercentageOfStraightLines;
-            _trackDistance = distance;
+            _trackLenght = distance;
             _failtureChance = failtureChance;
+            _speedUpChance = speedUpChance;
         }
-        //public int MaxEngineTemperature { get { return _maxEngineTemperature; } }
 
         public double TrackPercentageOfStraightLines => _trackPercentageOfStraightLines;
-        public double TrackDistance => _trackDistance;
+        public double TrackLenght => _trackLenght;
         public int FailtureChance => _failtureChance;
+        public int SpeedUpChance => _speedUpChance;
     }
 }
