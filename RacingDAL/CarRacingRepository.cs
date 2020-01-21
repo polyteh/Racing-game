@@ -14,7 +14,7 @@ namespace RacingDAL
         {
 
         }
-        public async override Task<RacingCar> FindByIdAsync(int id)
+        public async override Task<RacingCar> FindByIdAsync(int? id)
         {
             var itemBuId = await _dbSet.Include(x => x.Engine).Include(x=>x.Brake).Include(x => x.Suspention).SingleOrDefaultAsync<RacingCar>(e => e.Id == id);
             return itemBuId;

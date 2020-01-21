@@ -25,7 +25,7 @@ namespace RacingDTO.Services
             await _repository.CreateAsync(dalModelToCreate);
         }
 
-        public async Task<DTOModel> FindByIdAsync(int id)
+        public async Task<DTOModel> FindByIdAsync(int? id)
         {
             var entity = await _repository.FindByIdAsync(id);
             return Map(entity);
@@ -42,10 +42,6 @@ namespace RacingDTO.Services
             throw new NotImplementedException();
         }
 
-        public void Remove(DTOModel item)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task UpdateAsync(DTOModel item)
         {
@@ -61,6 +57,13 @@ namespace RacingDTO.Services
         public void Dispose()
         {
             _repository.Dispose();
+        }
+
+        public async Task<bool> RemoveAsync(DTOModel item)
+        {
+            var dalModelToDelete = Map(item);
+            var deleteResult = await _repository.RemoveAsync(dalModelToDelete);
+            return deleteResult;
         }
     }
 }

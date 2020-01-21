@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RacingDTO.RaceWorkerEngine.Models
+namespace RacingDTO.Models
 {
-    public class CarStatusWorker
+    public class CarStatusDTO
     {
-        public int Id{ get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public double DistanceCovered { get; set; }
         public List<string> StatusMessage { get; set; }

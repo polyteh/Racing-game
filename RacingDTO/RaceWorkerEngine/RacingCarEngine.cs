@@ -15,15 +15,16 @@ namespace RacingDTO.RaceWorkerEngine
     {
         private RaceConfiguration _curRaceConfiguration;
         private List<string> _curCarStatusMessageList;
+        private TimeSpan _timeInTheRace;
         private double _curDistanceCovered;
         private int _curEngineTemp = 30;
-        private bool _hasOverheatingPenalty;
-        private bool _hasBust;
-        private bool _isStopDueOverheating;
-        private bool _hasFailture;
+        //private bool _hasOverheatingPenalty;
+        //private bool _hasBust;
+        //private bool _isStopDueOverheating;
+        //private bool _hasFailture;
         private bool _isStatusSent;
         private RacingCarWorker _managedCar;
-        private object _locker=new object();
+        private object _locker = new object();
         public RacingCarEngine(RacingCarWorker curCar, RaceConfiguration curRaceConf)
         {
             _managedCar = curCar;
@@ -53,7 +54,7 @@ namespace RacingDTO.RaceWorkerEngine
                 }
                 else if (IsEngineNearOverheated())
                 {
-                    _hasOverheatingPenalty = true;
+                    //_hasOverheatingPenalty = true;
                     for (int i = 0; i < CarConfiguration.MaxBrakingAfterOverheating; i++)
                     {
                         Console.WriteLine($"Breaking due to overheating {i}\t ");
@@ -64,11 +65,11 @@ namespace RacingDTO.RaceWorkerEngine
                         }
                     }
                     Console.WriteLine($"Engine temperature after braking {_curEngineTemp}\t ");
-                    _hasOverheatingPenalty = false;
+                    //_hasOverheatingPenalty = false;
                 }
                 else if (IsSpeedUp())
                 {
-                    _hasBust = true;
+                    //_hasBust = true;
                     for (int i = 0; i < CarConfiguration.MaxAccelerateAfterSpeedUp; i++)
                     {
                         if (IsEngineOverheated())
@@ -113,7 +114,7 @@ namespace RacingDTO.RaceWorkerEngine
                 Thread.Sleep(100);
             } while (!IsFinished());
             stopWatch.Stop();
-            TimeSpan ts = stopWatch.Elapsed;
+            _timeInTheRace = stopWatch.Elapsed;
         }
         private void Accelerate()
         {
@@ -147,17 +148,17 @@ namespace RacingDTO.RaceWorkerEngine
         {
             if (_curRaceConfiguration.TrackLenght > _curDistanceCovered)
             {
-                _managedCar.IsFinished = true;
                 return false;
             }
+            _managedCar.IsFinished = true;
             return true;
         }
         private bool IsEngineOverheated()
         {
-            if (this._curEngineTemp >= CarConfiguration.MaxEngineTemperature )
+            if (this._curEngineTemp >= CarConfiguration.MaxEngineTemperature)
             {
                 SetStatus(CarStatusMessageConfiguration.MessageCodes.FailtureDueToEngineOverheating);
-                _isStopDueOverheating = true;
+                //_isStopDueOverheating = true;
                 return true;
             }
             return false;
@@ -178,7 +179,7 @@ namespace RacingDTO.RaceWorkerEngine
             if (failtureChance == _curRaceConfiguration.FailtureChance)
             {
                 SetStatus(CarStatusMessageConfiguration.MessageCodes.Failture);
-                _hasFailture = true;
+                //_hasFailture = true;
                 return true;
             }
             return false;
@@ -227,10 +228,17 @@ namespace RacingDTO.RaceWorkerEngine
         {
             lock (_locker)
             {
-                CarStatusWorker curCarStatus = new CarStatusWorker() { Id = _managedCar.Id, Name = _managedCar.Name,
-                    DistanceCovered = this.GetActualPosition(), StatusMessage = _curCarStatusMessageList };
+                CarStatusWorker curCarStatus = new CarStatusWorker()
+                {
+                    Id = _managedCar.Id,
+                    Name = _managedCar.Name,
+                    DistanceCovered = this.GetActualPosition(),
+                    StatusMessage = _curCarStatusMessageList,
+                    IsFinished = _managedCar.IsFinished,
+                    TimeInTheRace = _timeInTheRace
+                };
                 _isStatusSent = true;
-              return curCarStatus;
+                return curCarStatus;
             }
 
         }

@@ -66,6 +66,7 @@
     <Compile Include="Interfaces\IRacingCarService.cs" />
     <Compile Include="Interfaces\ISuspentionService.cs" />
     <Compile Include="Models\BrakeDTO.cs" />
+    <Compile Include="Models\CarStatusDTO.cs" />
     <Compile Include="Models\EngineDTO.cs" />
     <Compile Include="Models\RaceDTO.cs" />
     <Compile Include="Models\RacingCarDTO.cs" />

@@ -7,6 +7,7 @@ using RacingWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -43,6 +44,8 @@ namespace RacingWeb.Controllers
             newRaceView.CarList= TempData["RaceCarList"] as List<SimpleCarView>;
             var newBLRace = _mapper.Map<RaceDTO>(newRaceView);
             _raceService.StartRace(newBLRace);
+            Thread.Sleep(5000);
+            _raceService.GetRaceStatus();
         }
     }
 }

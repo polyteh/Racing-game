@@ -44,9 +44,9 @@ namespace RacingDAL
             this.disposed = true;
         }
 
-        public virtual async Task<TEntity> FindByIdAsync(int id)
+        public virtual async Task<TEntity> FindByIdAsync(int? id)
         {
-            var itemById = await _dbSet.SingleOrDefaultAsync<TEntity>(e=>e.Id==id);
+            var itemById = await _dbSet.SingleOrDefaultAsync<TEntity>(e => e.Id == id);
             return itemById;
         }
 
@@ -60,15 +60,23 @@ namespace RacingDAL
             throw new NotImplementedException();
         }
 
-        public void Remove(TEntity item)
+        public virtual async Task<bool> RemoveAsync(TEntity item)
         {
-            throw new NotImplementedException();
+            //_context.Entry<TEntity>(item).State = EntityState.Deleted;
+            //if (!_dbSet.Local.Contains(item))
+            //{
+            //    _dbSet.Attach(item);
+            //}
+            var itemBuId = _dbSet.SingleOrDefault(e => e.Id == item.Id);
+            _dbSet.Remove(itemBuId);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public virtual async Task UpdateAsync(TEntity item)
         {
             var itemBuId = _dbSet.SingleOrDefault(e => e.Id == item.Id);
-            if (itemBuId!=null)
+            if (itemBuId != null)
             {
                 _context.Entry<TEntity>(itemBuId).CurrentValues.SetValues(item);
                 await _context.SaveChangesAsync();
@@ -77,12 +85,12 @@ namespace RacingDAL
 
         public virtual IEnumerable<TEntity> GetAll()
         {
-            return  _dbSet.ToList();
+            return _dbSet.ToList();
         }
 
         public virtual TEntity FindById(int id)
         {
-            var itemById =  _dbSet.SingleOrDefault<TEntity>(e => e.Id == id);
+            var itemById = _dbSet.SingleOrDefault<TEntity>(e => e.Id == id);
             return itemById;
         }
     }

@@ -10,10 +10,10 @@ namespace RacingDTO.Interfaces
         where DTOModel:class
     {
         Task CreateAsync(DTOModel item);
-        Task<DTOModel> FindByIdAsync(int id);
+        Task<DTOModel> FindByIdAsync(int? id);
         Task<IEnumerable<DTOModel>> GetAllAsync();
         IEnumerable<DTOModel> GetAll(Func<DTOModel, bool> predicate);
-        void Remove(DTOModel item);
+        Task<bool> RemoveAsync(DTOModel item);
         Task UpdateAsync(DTOModel item);
     }
 }

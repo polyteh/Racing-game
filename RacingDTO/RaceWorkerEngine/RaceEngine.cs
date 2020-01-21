@@ -16,7 +16,7 @@ namespace RacingDTO.RaceWorkerEngine
         {
 
         }
-        public void StartRace(RaceWorker newRace)
+        public bool StartRace(RaceWorker newRace)
         {
             _newRace = newRace;
             CarNormalization();
@@ -27,7 +27,8 @@ namespace RacingDTO.RaceWorkerEngine
             var tasks = _newRace.CarList.Select(car => Task.Run(() => {
                 car.Move(new RaceConfiguration()); })).ToList();
 
-
+            Task.WhenAll(tasks);
+            return true;
             //Parallel.For(0, _newRace.CarList.Count(), (i) =>
             //{
             //    carsInTheRace[i] = new Task(() =>
@@ -42,12 +43,19 @@ namespace RacingDTO.RaceWorkerEngine
         {
             throw new NotImplementedException();
         }
-        public void GetStatus()
+        public List<CarStatusWorker> GetStatus()
         {
+            List<CarStatusWorker> raceStatus = new List<CarStatusWorker>();
             foreach (var item in _newRace.CarList)
             {
-                var k=item.GetStatus();
+                raceStatus.Add(item.GetStatus());
             }
+            List<CarStatusWorker>  sortedRaceStatus=raceStatus.OrderBy(x => x.TimeInTheRace).ThenBy(x => x.IsFinished).ToList();
+            for (int i = 0; i < sortedRaceStatus.Count(); i++)
+            {
+                sortedRaceStatus[i].Place = (i + 1);
+            }
+            return sortedRaceStatus;
         }
         private void CarNormalization()
         {

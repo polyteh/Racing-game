@@ -6,6 +6,7 @@ using RacingWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -20,12 +21,12 @@ namespace RacingWeb.Controllers
         public EngineController(IEngineService engineService, IMapper mapper)
         {
             _engineService = engineService;
-           _mapper = mapper;
+            _mapper = mapper;
         }
         // GET: Engine
         public async Task<ActionResult> Index()
         {
-            var listDTOEngine =  await _engineService.GetAllAsync();
+            var listDTOEngine = await _engineService.GetAllAsync();
             var listViewEngine = _mapper.Map<IEnumerable<EngineView>>(listDTOEngine);
             return View(listViewEngine);
         }
@@ -33,9 +34,13 @@ namespace RacingWeb.Controllers
         // GET: Engine/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var findEngineDTO= await _engineService.FindByIdAsync(id);
-            var engine = _mapper.Map<EngineView>(findEngineDTO);
-            return View(engine);
+            var findEngineDTO = await _engineService.FindByIdAsync(id);
+            if (findEngineDTO != null)
+            {
+                var engine = _mapper.Map<EngineView>(findEngineDTO);
+                return View(engine);
+            }
+            return HttpNotFound();
         }
 
         // GET: Engine/Create
@@ -62,11 +67,19 @@ namespace RacingWeb.Controllers
         }
 
         // GET: Engine/Edit/5
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var engineDTO = await _engineService.FindByIdAsync(id);
-            var engineView = _mapper.Map<EngineView>(engineDTO);
-            return View(engineView);
+            if (engineDTO != null)
+            {
+                var engineView = _mapper.Map<EngineView>(engineDTO);
+                return View(engineView);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
         // POST: Engine/Edit/5
@@ -87,25 +100,30 @@ namespace RacingWeb.Controllers
         }
 
         // GET: Engine/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var engineToDeleteDTO = await _engineService.FindByIdAsync(id);
+            if (engineToDeleteDTO == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            var engineToDeleteView = _mapper.Map<EngineView>(engineToDeleteDTO);
+            return View(engineToDeleteView);
         }
 
         // POST: Engine/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            try
+            var engineToDeleteDTO = await _engineService.FindByIdAsync(id);
+            var deleteResult = await _engineService.RemoveAsync(engineToDeleteDTO);
+            if (deleteResult)
             {
-                // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
     }
+
 }

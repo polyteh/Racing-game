@@ -10,5 +10,6 @@ namespace RacingDTO.Interfaces
     public interface IRaceService
     {
         void StartRace(RaceDTO newRace);
+        List<CarStatusDTO> GetRaceStatus();
     }
 }

@@ -43,10 +43,10 @@ namespace RacingDTO.Services
             }
             newRace.CarList = fullCarList;
         }
-        public void GetRaceSatus()
+        public List<CarStatusDTO> GetRaceStatus()
         {
-            newRaceWorker.GetStatus();
-        
+            List<CarStatusDTO> raceStatus = _mapper.Map<List<CarStatusDTO>>(newRaceWorker.GetStatus());
+            return raceStatus;
         }
     }
 }

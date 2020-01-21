@@ -53,14 +53,14 @@ namespace ConsoleTests
             var kernel = new StandardKernel(modules);
             var raceService = kernel.Get<RaceService>();
 
-            List<RacingCarDTO> carList = new List<RacingCarDTO>() { new RacingCarDTO() { Id = 1 }, new RacingCarDTO() { Id = 2 } };
+            List<RacingCarDTO> carList = new List<RacingCarDTO>() { new RacingCarDTO() { Id = 1 }, new RacingCarDTO() { Id = 2 }, new RacingCarDTO() { Id = 3 } };
             //List<RacingCarDTO> carList = new List<RacingCarDTO>() { new RacingCarDTO() { Id = 1 } };
             RaceDTO newRace = new RaceDTO() { CarList = carList };
             raceService.StartRace(newRace);
 
             Thread.Sleep(5000);
 
-            raceService.GetRaceSatus();
+            raceService.GetRaceStatus();
 
 
             Console.ReadKey();
