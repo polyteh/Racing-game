@@ -17,6 +17,9 @@ namespace RacingWeb.Configuration
             CreateMap<RacingCarView, RacingCarDTO>().ReverseMap();
             CreateMap<SimpleCarView, RacingCarDTO>().ReverseMap();
             CreateMap<RaceView, RaceDTO>().ReverseMap();
+            CreateMap<SimpleCarView, CarStatusView>().ReverseMap();
+            CreateMap<CarStatusView, CarStatusDTO>().ReverseMap();
+            CreateMap<CarStatusView, RacingCarDTO>().ReverseMap();
         }
     }
 }

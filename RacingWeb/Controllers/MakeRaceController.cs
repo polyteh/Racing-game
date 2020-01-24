@@ -29,20 +29,23 @@ namespace RacingWeb.Controllers
         {
             return View();
         }
-        [ChildActionOnly]
+
         public ActionResult CarListPartial()
         {
             IEnumerable<SimpleCarView> carsToRace = new List<SimpleCarView>();
             carsToRace = TempData["RaceCarList"] as IEnumerable<SimpleCarView>;
             TempData.Keep("RaceCarList");
-            return PartialView(carsToRace);
+            //return PartialView(carsToRace);
+            return Json(carsToRace, JsonRequestBehavior.AllowGet);
         }
         //как правильно сюда получить список из CarListPartial()? можно через TempData, но это костыль
         [HttpGet]
         public void StartRace()
         {
             RaceView newRaceView = new RaceView();
-            newRaceView.CarList= TempData["RaceCarList"] as List<SimpleCarView>;
+            //K.I.S.S.
+            IEnumerable<SimpleCarView> carsToRace = TempData["RaceCarList"] as List<SimpleCarView>;
+            newRaceView.CarList = _mapper.Map<IEnumerable<CarStatusView>>(carsToRace).ToList();
             var newBLRace = _mapper.Map<RaceDTO>(newRaceView);
             _raceService.StartRace(newBLRace);
             Session["race"] = _raceService;
@@ -52,8 +55,8 @@ namespace RacingWeb.Controllers
         public void GetStatus()
         {
             //IRaceService raceService = TempData["curraceSeervice"] as IRaceService;
-            IRaceService raceService=(IRaceService)Session["race"];
-            var t= raceService.GetRaceStatus();
+            IRaceService raceService = (IRaceService)Session["race"];
+            var t = raceService.GetRaceStatus();
         }
 
     }

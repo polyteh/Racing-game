@@ -159,10 +159,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BrakeView.cs" />
+    <Compile Include="Models\CarStatusView.cs" />
     <Compile Include="Models\EngineView.cs" />
     <Compile Include="Models\RaceView.cs" />
     <Compile Include="Models\RacingCarView.cs" />
-    <Compile Include="Models\SelectSimpleCarsView.cs" />
     <Compile Include="Models\SimpleCarView.cs" />
     <Compile Include="Models\SuspentionView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

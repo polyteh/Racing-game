@@ -1,11 +1,13 @@
-﻿@*@model RacingWeb.Models.EngineView*@
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
-@{Html.RenderAction("CarListPartial");}
+
+<div id="tableBlock"></div>
+
+
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
         @*<input type="submit" value="Create" class="btn btn-default" />*@
@@ -15,6 +17,41 @@
 </div>
 
 <script type="text/jscript">
+
+    $(document).ready(function () {
+
+         GetAllCars()
+    })
+
+
+    // Получение всех статей по ajax-запросу
+    function GetAllCars() {
+        $.ajax({
+            url: '/MakeRace/CarListPartial/',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                WriteResponse(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+
+    function WriteResponse(cars) {
+        var strResult = "<table><th>ID</th><th>Title</th><th>SubTitle</th><th>Body</th>";
+        $.each(cars, function (index, car) {
+            strResult += "<tr><td>" + car.Id + "</td><td> " + car.Name + "</td><td>" +"</tr > ";
+        });
+        strResult += "</table>";
+        $("#tableBlock").html(strResult);
+
+    }
+
+
+
     function StartRace() {
         $.get("/MakeRace/StartRace");
         $.get("/MakeRace/GetStatus");

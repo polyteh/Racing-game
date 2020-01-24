@@ -8,6 +8,6 @@ namespace RacingWeb.Models
     public class RaceView
     {
         public int Id { get; set; }
-        public List<SimpleCarView> CarList { get; set; }
+        public List<CarStatusView> CarList { get; set; }
     }
 }
