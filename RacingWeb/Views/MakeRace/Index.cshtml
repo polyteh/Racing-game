@@ -10,9 +10,8 @@
 
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        @*<input type="submit" value="Create" class="btn btn-default" />*@
         <input type="button" onclick="StartRace()" value="StartRace" />
-        <input type="button" onclick="GetStatus()" value="GetResult" />
+        <input type="button" onclick="GetStatus()" value="GetStatus" />
     </div>
 </div>
 
@@ -20,14 +19,14 @@
 
     $(document).ready(function () {
 
-         GetAllCars()
+        GetAllCars()
     })
 
 
-    // Получение всех статей по ajax-запросу
+    // Получение всех машин по ajax-запросу
     function GetAllCars() {
         $.ajax({
-            url: '/MakeRace/CarListPartial/',
+            url: '/MakeRace/GetStatus/',
             type: 'get',
             dataType: 'json',
             success: function (data) {
@@ -39,11 +38,11 @@
         });
     }
 
-
+    // вывод машин в таблицу
     function WriteResponse(cars) {
         var strResult = "<table><th>ID</th><th>Title</th><th>SubTitle</th><th>Body</th>";
         $.each(cars, function (index, car) {
-            strResult += "<tr><td>" + car.Id + "</td><td> " + car.Name + "</td><td>" +"</tr > ";
+            strResult += "<tr><td>" + car.Id + "</td><td> " + car.Name + "</td><td>" + car.DistanceCovered + "</td></tr > ";
         });
         strResult += "</table>";
         $("#tableBlock").html(strResult);
@@ -54,16 +53,18 @@
 
     function StartRace() {
         $.get("/MakeRace/StartRace");
-        $.get("/MakeRace/GetStatus");
-
-
-
-
+        GetStatus()
     };
     function GetStatus() {
-        $.get("/MakeRace/GetStatus");
+
+        let counter = 0;
+        let timerFunc = setInterval(function () {
+            GetAllCars();
+            counter++;
+            if (counter === 3) {
+                clearInterval(timerFunc)
+            }
+        }, 500);
+
     };
 </script>
-@*<p>
-        <input type="button" onclick="CreateMergeReport()" value="Create" />
-    </p>*@

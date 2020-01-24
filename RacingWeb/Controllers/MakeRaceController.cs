@@ -15,49 +15,50 @@ namespace RacingWeb.Controllers
 {
     public class MakeRaceController : Controller
     {
-        private readonly IRaceService _raceService;
+        //как можно сделать readonly?
+        private  IRaceService _raceService;
         private readonly IMapper _mapper;
+        private RaceView newRaceView;
         //to do  inject
         [Inject]
         public MakeRaceController(IRaceService raceService, IMapper mapper)
         {
             _raceService = raceService;
             _mapper = mapper;
+            newRaceView = new RaceView();
         }
         // GET: MakeRace
         public ActionResult Index()
         {
+            IEnumerable<SimpleCarView> carsToRace = new List<SimpleCarView>();
+            carsToRace = TempData["RaceCarList"] as IEnumerable<SimpleCarView>;
+            newRaceView.CarList = _mapper.Map<IEnumerable<CarStatusView>>(carsToRace).ToList();
+            Session["raceView"] = newRaceView;
+            Session["raceService"] = _raceService;
             return View();
         }
 
-        public ActionResult CarListPartial()
+        public ActionResult GetStatus()
         {
-            IEnumerable<SimpleCarView> carsToRace = new List<SimpleCarView>();
-            carsToRace = TempData["RaceCarList"] as IEnumerable<SimpleCarView>;
-            TempData.Keep("RaceCarList");
-            //return PartialView(carsToRace);
-            return Json(carsToRace, JsonRequestBehavior.AllowGet);
+            _raceService = (IRaceService)Session["raceService"];
+            if (!_raceService.isRunning())
+            {
+                RaceView raceView = (RaceView)Session["raceView"];
+                return Json(raceView.CarList, JsonRequestBehavior.AllowGet);
+            }
+            List<CarStatusDTO> carStatusList = _raceService.GetRaceStatus();
+
+            return Json(_mapper.Map<IEnumerable<CarStatusView>>(carStatusList), JsonRequestBehavior.AllowGet);
         }
         //как правильно сюда получить список из CarListPartial()? можно через TempData, но это костыль
         [HttpGet]
         public void StartRace()
         {
-            RaceView newRaceView = new RaceView();
-            //K.I.S.S.
-            IEnumerable<SimpleCarView> carsToRace = TempData["RaceCarList"] as List<SimpleCarView>;
-            newRaceView.CarList = _mapper.Map<IEnumerable<CarStatusView>>(carsToRace).ToList();
-            var newBLRace = _mapper.Map<RaceDTO>(newRaceView);
+            _raceService = (IRaceService)Session["raceService"];
+            var newBLRace = _mapper.Map<RaceDTO>((RaceView)Session["raceView"]);
             _raceService.StartRace(newBLRace);
-            Session["race"] = _raceService;
+            Session["raceService"] = _raceService;
 
         }
-        [HttpGet]
-        public void GetStatus()
-        {
-            //IRaceService raceService = TempData["curraceSeervice"] as IRaceService;
-            IRaceService raceService = (IRaceService)Session["race"];
-            var t = raceService.GetRaceStatus();
-        }
-
     }
 }

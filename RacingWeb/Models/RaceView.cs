@@ -9,5 +9,7 @@ namespace RacingWeb.Models
     {
         public int Id { get; set; }
         public List<CarStatusView> CarList { get; set; }
+        public bool isStarted { get; set; }
+
     }
 }

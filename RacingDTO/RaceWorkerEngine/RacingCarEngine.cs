@@ -232,7 +232,7 @@ namespace RacingDTO.RaceWorkerEngine
                 {
                     Id = _managedCar.Id,
                     Name = _managedCar.Name,
-                    DistanceCovered = this.GetActualPosition(),
+                    DistanceCovered = (int)this.GetActualPosition(),
                     StatusMessage = _curCarStatusMessageList,
                     IsFinished = _managedCar.IsFinished,
                     TimeInTheRace = _timeInTheRace
