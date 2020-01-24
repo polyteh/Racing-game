@@ -27,13 +27,13 @@ namespace RacingDTO.Services
             _repository = rep;
             _mapper = mapper;
         }
-        public void StartRace(RaceDTO newRace)
+        public async Task StartRace(RaceDTO newRace)
         {
             newRaceWorker = new RaceEngine();
             GetCarsForRacing(newRace);
             var raceToStart = _mapper.Map<RaceWorker>(newRace);
             _isRunning = true;
-            newRaceWorker.StartRace(raceToStart);
+            await newRaceWorker.StartRace(raceToStart);
            // _isRunning = false;
         }
         private void GetCarsForRacing(RaceDTO newRace)

@@ -5,7 +5,7 @@
 <h2>Index</h2>
 
 
-<div id="tableBlock"></div>
+<div id="tableBlock" class="table table-dark col-md-4"></div>
 
 
 <div class="form-group">
@@ -19,18 +19,33 @@
 
     $(document).ready(function () {
 
-        GetAllCars()
+        ShowAllCars()
     })
 
 
     // Получение всех машин по ajax-запросу
-    function GetAllCars() {
+    function ShowAllCars() {
         $.ajax({
             url: '/MakeRace/GetStatus/',
             type: 'get',
             dataType: 'json',
             success: function (data) {
                 WriteResponse(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+        // происходит ли гонка
+    function IsRaceRunning() {
+        $.ajax({
+            url: '/MakeRace/isRaceRunning/',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                GetStatus(data);
             },
             error: function (x, y, z) {
                 alert(x + '\n' + y + '\n' + z);
@@ -49,22 +64,19 @@
 
     }
 
-
-
+    // начало гонки 
     function StartRace() {
         $.get("/MakeRace/StartRace");
         GetStatus()
     };
-    function GetStatus() {
 
-        let counter = 0;
+    //обновление таблицы статуса
+    function GetStatus(data) {
         let timerFunc = setInterval(function () {
-            GetAllCars();
-            counter++;
-            if (counter === 3) {
+            ShowAllCars();
+            if (data) {
                 clearInterval(timerFunc)
             }
         }, 500);
-
     };
 </script>

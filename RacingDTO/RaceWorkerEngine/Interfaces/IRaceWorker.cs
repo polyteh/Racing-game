@@ -9,7 +9,7 @@ namespace RacingDTO.RaceWorkerEngine.Interfaces
 {
     public interface IRaceWorker
     {
-        bool StartRace(RaceWorker newRace);
+        Task StartRace(RaceWorker newRace);
         void StopRace();
         List<CarStatusWorker> GetStatus();
     }

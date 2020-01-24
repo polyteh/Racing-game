@@ -16,7 +16,7 @@ namespace RacingWeb.Controllers
     public class MakeRaceController : Controller
     {
         //как можно сделать readonly?
-        private  IRaceService _raceService;
+        private IRaceService _raceService;
         private readonly IMapper _mapper;
         private RaceView newRaceView;
         //to do  inject
@@ -37,7 +37,6 @@ namespace RacingWeb.Controllers
             Session["raceService"] = _raceService;
             return View();
         }
-
         public ActionResult GetStatus()
         {
             _raceService = (IRaceService)Session["raceService"];
@@ -59,6 +58,11 @@ namespace RacingWeb.Controllers
             _raceService.StartRace(newBLRace);
             Session["raceService"] = _raceService;
 
+        }
+        public ActionResult isRaceRunning()
+        {
+            _raceService = (IRaceService)Session["raceService"];
+            return Json(_raceService.isRunning(),JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace RacingDTO.RaceWorkerEngine
         {
 
         }
-        public bool StartRace(RaceWorker newRace)
+        public async Task StartRace(RaceWorker newRace)
         {
             _newRace = newRace;
             CarNormalization();
@@ -27,8 +27,8 @@ namespace RacingDTO.RaceWorkerEngine
             var tasks = _newRace.CarList.Select(car => Task.Run(() => {
                 car.Move(new RaceConfiguration()); })).ToList();
 
-            Task.WhenAll(tasks);
-            return true;
+            await Task.WhenAll(tasks);
+
             //Parallel.For(0, _newRace.CarList.Count(), (i) =>
             //{
             //    carsInTheRace[i] = new Task(() =>
