@@ -17,6 +17,7 @@ namespace RacingWeb.Controllers
     {
         private readonly IRaceService _raceService;
         private readonly IMapper _mapper;
+        //to do  inject
         [Inject]
         public MakeRaceController(IRaceService raceService, IMapper mapper)
         {
@@ -44,8 +45,16 @@ namespace RacingWeb.Controllers
             newRaceView.CarList= TempData["RaceCarList"] as List<SimpleCarView>;
             var newBLRace = _mapper.Map<RaceDTO>(newRaceView);
             _raceService.StartRace(newBLRace);
-            Thread.Sleep(5000);
-            _raceService.GetRaceStatus();
+            Session["race"] = _raceService;
+
         }
+        [HttpGet]
+        public void GetStatus()
+        {
+            //IRaceService raceService = TempData["curraceSeervice"] as IRaceService;
+            IRaceService raceService=(IRaceService)Session["race"];
+            var t= raceService.GetRaceStatus();
+        }
+
     }
 }

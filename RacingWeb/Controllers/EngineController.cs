@@ -114,10 +114,9 @@ namespace RacingWeb.Controllers
         // POST: Engine/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int? id)
         {
-            var engineToDeleteDTO = await _engineService.FindByIdAsync(id);
-            var deleteResult = await _engineService.RemoveAsync(engineToDeleteDTO);
+            var deleteResult = await _engineService.RemoveAsync(id);
             if (deleteResult)
             {
                 return RedirectToAction("Index");

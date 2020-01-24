@@ -60,14 +60,14 @@ namespace RacingDAL
             throw new NotImplementedException();
         }
 
-        public virtual async Task<bool> RemoveAsync(TEntity item)
+        public virtual async Task<bool> RemoveAsync(int? id)
         {
             //_context.Entry<TEntity>(item).State = EntityState.Deleted;
             //if (!_dbSet.Local.Contains(item))
             //{
             //    _dbSet.Attach(item);
             //}
-            var itemBuId = _dbSet.SingleOrDefault(e => e.Id == item.Id);
+            var itemBuId = _dbSet.SingleOrDefault(e => e.Id == id);
             _dbSet.Remove(itemBuId);
             await _context.SaveChangesAsync();
             return true;

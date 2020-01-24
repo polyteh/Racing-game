@@ -59,10 +59,9 @@ namespace RacingDTO.Services
             _repository.Dispose();
         }
 
-        public async Task<bool> RemoveAsync(DTOModel item)
+        public async Task<bool> RemoveAsync(int? id)
         {
-            var dalModelToDelete = Map(item);
-            var deleteResult = await _repository.RemoveAsync(dalModelToDelete);
+            var deleteResult = await _repository.RemoveAsync(id);
             return deleteResult;
         }
     }

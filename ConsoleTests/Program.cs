@@ -60,7 +60,7 @@ namespace ConsoleTests
 
             Thread.Sleep(5000);
 
-            raceService.GetRaceStatus();
+            var t=raceService.GetRaceStatus();
 
 
             Console.ReadKey();

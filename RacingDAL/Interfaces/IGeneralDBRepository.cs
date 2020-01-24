@@ -13,7 +13,7 @@ namespace RacingDAL.Interfaces
         Task<TEntity> FindByIdAsync(int? id);
         Task<IEnumerable<TEntity>> GetAllAsync();
         IEnumerable<TEntity> GetAllAsync(Func<TEntity, bool> predicate);
-        Task<bool> RemoveAsync(TEntity item);
+        Task<bool> RemoveAsync(int? id);
         Task UpdateAsync(TEntity item);
         IEnumerable<TEntity> GetAll();
         TEntity FindById(int id);

@@ -111,7 +111,7 @@ namespace RacingDTO.RaceWorkerEngine
                     Console.WriteLine($"Engine temperature {this._curEngineTemp}");
                 }
 
-                Thread.Sleep(100);
+                Thread.Sleep(500);
             } while (!IsFinished());
             stopWatch.Stop();
             _timeInTheRace = stopWatch.Elapsed;
