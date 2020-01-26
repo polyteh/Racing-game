@@ -34,6 +34,7 @@ namespace RacingDTO.Services
             GetCarsForRacing(newRace);
             var raceToStart = _mapper.Map<RaceWorker>(newRace);
             _isRunning = true;
+            Debug.WriteLine($"race from service. Start race Working: {_isRunning }");
             await newRaceWorker.StartRace(raceToStart);
             _isRunning = false;
             Debug.WriteLine($"race from service, Working: {_isRunning }");

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -52,19 +53,30 @@ namespace RacingWeb.Controllers
             return Json(_mapper.Map<IEnumerable<CarStatusView>>(carStatusList), JsonRequestBehavior.AllowGet);
         }
         //синхронный метод. При нем нем возврата в _raceService.StartRace(newBLRace) после завершения гонки
+        //[HttpGet]
+        //public void StartRace()
+        //{
+        //    _newRaceView =(RaceView) Session["raceView"];
+        //    _raceService = (IRaceService)Session["raceService"];
+        //    _newRaceView.isStarted = true;
+        //    var newBLRace = _mapper.Map<RaceDTO>((RaceView)Session["raceView"]);
+        //    Session["raceService"] = _raceService;
+        //    Session["raceView"] = _newRaceView;
+        //    _raceService.StartRace(newBLRace);
+        //}
+
+        //асинхронный метод. При нем нем возврата в _raceService.StartRace(newBLRace) после завершения гонки
         [HttpGet]
-        public void StartRace()
+        public async Task StartRace()
         {
-            _newRaceView =(RaceView) Session["raceView"];
+            _newRaceView = (RaceView)Session["raceView"];
             _raceService = (IRaceService)Session["raceService"];
             _newRaceView.isStarted = true;
             var newBLRace = _mapper.Map<RaceDTO>((RaceView)Session["raceView"]);
             Session["raceService"] = _raceService;
             Session["raceView"] = _newRaceView;
-            _raceService.StartRace(newBLRace);
+            await _raceService.StartRace(newBLRace);
         }
-
-
 
 
         //public ActionResult isRaceRunning()

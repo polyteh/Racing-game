@@ -64,11 +64,20 @@
 
     }
 
-    // начало гонки 
-    function StartRace() {
-        $.get("/MakeRace/StartRace");
+    // начало гонки синхронно
+    //function StartRace() {
+    //    $.get("/MakeRace/StartRace");
+    //    GetStatus()
+    //};
+
+
+    // начало гонки асинхронно
+    async function StartRace() {
+        //GetStatus()
+        await $.get("/MakeRace/StartRace");
         GetStatus()
     };
+
 
     //обновление таблицы статуса
     function GetStatus() {
@@ -76,7 +85,7 @@
             ShowAllCars();
             var isTrueSet = $.get("/MakeRace/isRaceRunning")
             var data = (isTrueSet === 'true');
-            if (data) {
+            if (data === false) {
                 clearInterval(timerFunc)
             }
         }, 500);
