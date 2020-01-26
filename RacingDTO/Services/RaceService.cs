@@ -9,6 +9,7 @@ using RacingDTO.RaceWorkerEngine.Interfaces;
 using RacingDTO.RaceWorkerEngine.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +35,8 @@ namespace RacingDTO.Services
             var raceToStart = _mapper.Map<RaceWorker>(newRace);
             _isRunning = true;
             await newRaceWorker.StartRace(raceToStart);
-           // _isRunning = false;
+            _isRunning = false;
+            Debug.WriteLine($"race from service, Working: {_isRunning }");
         }
         private void GetCarsForRacing(RaceDTO newRace)
         {

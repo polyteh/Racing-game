@@ -38,20 +38,20 @@
         });
     }
 
-        // происходит ли гонка
-    function IsRaceRunning() {
-        $.ajax({
-            url: '/MakeRace/isRaceRunning/',
-            type: 'get',
-            dataType: 'json',
-            success: function (data) {
-                GetStatus(data);
-            },
-            error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
-            }
-        });
-    }
+    //    // происходит ли гонка
+    //function IsRaceRunning() {
+    //    $.ajax({
+    //        url: '/MakeRace/isRaceRunning/',
+    //        type: 'get',
+    //        dataType: 'json',
+    //        success: function (data) {
+    //            GetStatus(data);
+    //        },
+    //        error: function (x, y, z) {
+    //            alert(x + '\n' + y + '\n' + z);
+    //        }
+    //    });
+    //}
 
     // вывод машин в таблицу
     function WriteResponse(cars) {
@@ -71,9 +71,11 @@
     };
 
     //обновление таблицы статуса
-    function GetStatus(data) {
+    function GetStatus() {
         let timerFunc = setInterval(function () {
             ShowAllCars();
+            var isTrueSet = $.get("/MakeRace/isRaceRunning")
+            var data = (isTrueSet === 'true');
             if (data) {
                 clearInterval(timerFunc)
             }

@@ -6,6 +6,7 @@ using RacingDTO.Services;
 using RacingWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -18,29 +19,30 @@ namespace RacingWeb.Controllers
         //как можно сделать readonly?
         private IRaceService _raceService;
         private readonly IMapper _mapper;
-        private RaceView newRaceView;
+        private RaceView _newRaceView;
         //to do  inject
         [Inject]
         public MakeRaceController(IRaceService raceService, IMapper mapper)
         {
             _raceService = raceService;
             _mapper = mapper;
-            newRaceView = new RaceView();
+            _newRaceView = new RaceView();
         }
         // GET: MakeRace
         public ActionResult Index()
         {
             IEnumerable<SimpleCarView> carsToRace = new List<SimpleCarView>();
             carsToRace = TempData["RaceCarList"] as IEnumerable<SimpleCarView>;
-            newRaceView.CarList = _mapper.Map<IEnumerable<CarStatusView>>(carsToRace).ToList();
-            Session["raceView"] = newRaceView;
+            _newRaceView.CarList = _mapper.Map<IEnumerable<CarStatusView>>(carsToRace).ToList();
+            Session["raceView"] = _newRaceView;
             Session["raceService"] = _raceService;
             return View();
         }
         public ActionResult GetStatus()
         {
+            _newRaceView = (RaceView)Session["raceView"];
             _raceService = (IRaceService)Session["raceService"];
-            if (!_raceService.isRunning())
+            if (!_newRaceView.isStarted)
             {
                 RaceView raceView = (RaceView)Session["raceView"];
                 return Json(raceView.CarList, JsonRequestBehavior.AllowGet);
@@ -49,20 +51,35 @@ namespace RacingWeb.Controllers
 
             return Json(_mapper.Map<IEnumerable<CarStatusView>>(carStatusList), JsonRequestBehavior.AllowGet);
         }
-        //как правильно сюда получить список из CarListPartial()? можно через TempData, но это костыль
+        //синхронный метод. При нем нем возврата в _raceService.StartRace(newBLRace) после завершения гонки
         [HttpGet]
         public void StartRace()
         {
+            _newRaceView =(RaceView) Session["raceView"];
             _raceService = (IRaceService)Session["raceService"];
+            _newRaceView.isStarted = true;
             var newBLRace = _mapper.Map<RaceDTO>((RaceView)Session["raceView"]);
-            _raceService.StartRace(newBLRace);
             Session["raceService"] = _raceService;
-
+            Session["raceView"] = _newRaceView;
+            _raceService.StartRace(newBLRace);
         }
-        public ActionResult isRaceRunning()
+
+
+
+
+        //public ActionResult isRaceRunning()
+        //{
+        //    _raceService = (IRaceService)Session["raceService"];
+        //    return Json(_raceService.isRunning(),JsonRequestBehavior.AllowGet);
+        //}
+
+        public bool isRaceRunning()
         {
             _raceService = (IRaceService)Session["raceService"];
-            return Json(_raceService.isRunning(),JsonRequestBehavior.AllowGet);
+            Debug.WriteLine($"Race from controller: {_raceService.isRunning()}");
+            return _raceService.isRunning();
         }
+
+
     }
 }
