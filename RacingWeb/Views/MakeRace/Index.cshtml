@@ -11,7 +11,7 @@
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
         <input type="button" onclick="StartRace()" value="StartRace" />
-        <input type="button" onclick="GetStatus()" value="GetStatus" />
+        <input type="button" onclick="GetAlert()" value="GetAlert" />
     </div>
 </div>
 
@@ -36,7 +36,11 @@
                 alert(x + '\n' + y + '\n' + z);
             }
         });
-    }
+    };
+
+    function GetAlert() {
+        alert("alert")
+    };
 
     //    // происходит ли гонка
     //function IsRaceRunning() {
@@ -66,28 +70,44 @@
 
     // начало гонки синхронно
     //function StartRace() {
-    //    $.get("/MakeRace/StartRace");
+
+    //    startRace()
+    //    //$.get("/MakeRace/StartRace");
     //    GetStatus()
     //};
 
 
-    // начало гонки асинхронно
-    async function StartRace() {
+    //начало гонки асинхронно
+    function StartRace() {
+
+        startRace();
         //GetStatus()
-        await $.get("/MakeRace/StartRace");
-        GetStatus()
     };
 
 
     //обновление таблицы статуса
     function GetStatus() {
+        let statusCount = 0;
         let timerFunc = setInterval(function () {
-            ShowAllCars();
-            var isTrueSet = $.get("/MakeRace/isRaceRunning")
-            var data = (isTrueSet === 'true');
-            if (data === false) {
-                clearInterval(timerFunc)
-            }
+            $.get("/MakeRace/IsRaceRunning", function (data) {
+                statusCount++;
+                ShowAllCars();
+                alert(statusCount)
+                var check = data.toLowerCase() == 'true' ? true : false;
+                if (check === false) {
+                    clearInterval(timerFunc)
+                }
+            })
         }, 500);
     };
+
+    var startRace = function startRaceAjax() {
+        $.ajax({
+            url: '/MakeRace/StartRace',
+            type: 'GET',
+            dataType: 'json',
+            success:
+                GetStatus(),
+        });
+    }
 </script>

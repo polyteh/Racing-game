@@ -52,11 +52,11 @@ namespace RacingWeb.Controllers
 
             return Json(_mapper.Map<IEnumerable<CarStatusView>>(carStatusList), JsonRequestBehavior.AllowGet);
         }
-        //синхронный метод. При нем нем возврата в _raceService.StartRace(newBLRace) после завершения гонки
+        //синхронный метод. При нем нет возврата в _raceService.StartRace(newBLRace) после завершения гонки
         //[HttpGet]
         //public void StartRace()
         //{
-        //    _newRaceView =(RaceView) Session["raceView"];
+        //    _newRaceView = (RaceView)Session["raceView"];
         //    _raceService = (IRaceService)Session["raceService"];
         //    _newRaceView.isStarted = true;
         //    var newBLRace = _mapper.Map<RaceDTO>((RaceView)Session["raceView"]);
@@ -65,7 +65,7 @@ namespace RacingWeb.Controllers
         //    _raceService.StartRace(newBLRace);
         //}
 
-        //асинхронный метод. При нем нем возврата в _raceService.StartRace(newBLRace) после завершения гонки
+        //асинхронный метод.При нем нем блокируется вывод
         [HttpGet]
         public async Task StartRace()
         {
@@ -76,6 +76,8 @@ namespace RacingWeb.Controllers
             Session["raceService"] = _raceService;
             Session["raceView"] = _newRaceView;
             await _raceService.StartRace(newBLRace);
+
+
         }
 
 
@@ -85,7 +87,7 @@ namespace RacingWeb.Controllers
         //    return Json(_raceService.isRunning(),JsonRequestBehavior.AllowGet);
         //}
 
-        public bool isRaceRunning()
+        public bool IsRaceRunning()
         {
             _raceService = (IRaceService)Session["raceService"];
             Debug.WriteLine($"Race from controller: {_raceService.isRunning()}");
