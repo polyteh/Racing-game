@@ -12,5 +12,6 @@ namespace RacingDTO.RaceWorkerEngine.Interfaces
         Task StartRace(RaceWorker newRace);
         void StopRace();
         List<CarStatusWorker> GetStatus();
+        bool IsRaceRunning();
     }
 }

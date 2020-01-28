@@ -21,8 +21,9 @@ namespace RacingDTO.RaceWorkerEngine
         //private bool _hasOverheatingPenalty;
         //private bool _hasBust;
         //private bool _isStopDueOverheating;
-        //private bool _hasFailture;
+        private bool _hasDamage;
         private bool _isStatusSent;
+        private bool _isInTheRace;
         private RacingCarWorker _managedCar;
         private object _locker = new object();
         public RacingCarEngine(RacingCarWorker curCar, RaceConfiguration curRaceConf)
@@ -37,6 +38,10 @@ namespace RacingDTO.RaceWorkerEngine
             Thread countThread = Thread.CurrentThread;
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
+            lock (_locker)
+            {
+                _isInTheRace = true; ;
+            }
             do
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -91,7 +96,7 @@ namespace RacingDTO.RaceWorkerEngine
                 }
                 else
                 {
-                    Random random = new Random(DateTime.Now.Millisecond);
+                    Random random = new Random(DateTime.Now.Millisecond + (int)_managedCar.Id);
                     int actionNumber = random.Next(1, CarBehaviourWorker.TotalActionWeight + 1);
                     if (actionNumber <= CarBehaviourWorker.Acceleration)
                     {
@@ -113,6 +118,10 @@ namespace RacingDTO.RaceWorkerEngine
 
                 Thread.Sleep(500);
             } while (!IsFinished());
+            lock (_locker)
+            {
+                _isInTheRace = false;
+            }
             stopWatch.Stop();
             _timeInTheRace = stopWatch.Elapsed;
         }
@@ -158,7 +167,7 @@ namespace RacingDTO.RaceWorkerEngine
             if (this._curEngineTemp >= CarConfiguration.MaxEngineTemperature)
             {
                 SetStatus(CarStatusMessageConfiguration.MessageCodes.FailtureDueToEngineOverheating);
-                //_isStopDueOverheating = true;
+                _hasDamage = true;
                 return true;
             }
             return false;
@@ -179,7 +188,7 @@ namespace RacingDTO.RaceWorkerEngine
             if (failtureChance == _curRaceConfiguration.FailtureChance)
             {
                 SetStatus(CarStatusMessageConfiguration.MessageCodes.Failture);
-                //_hasFailture = true;
+                _hasDamage = true;
                 return true;
             }
             return false;
@@ -206,12 +215,17 @@ namespace RacingDTO.RaceWorkerEngine
         {
             lock (_locker)
             {
-                if (_isStatusSent)
+                if (!_hasDamage)
                 {
-                    _curCarStatusMessageList.Clear();
-                    _isStatusSent = false;
+                    if (_isStatusSent)
+                    {
+                        _curCarStatusMessageList.Clear();
+                        _isStatusSent = false;
+                    }
+                    _curCarStatusMessageList.Add(_managedCar.Name + ": " + CarStatusMessageConfiguration.GetMessage(messCode));
+                    Debug.WriteLine(_managedCar.Name + ": " + CarStatusMessageConfiguration.GetMessage(messCode));
                 }
-                _curCarStatusMessageList.Add(CarStatusMessageConfiguration.GetMessage(messCode));
+
             }
         }
         private double GetActualPosition()
@@ -233,11 +247,19 @@ namespace RacingDTO.RaceWorkerEngine
                     Id = _managedCar.Id,
                     Name = _managedCar.Name,
                     DistanceCovered = (int)this.GetActualPosition(),
-                    StatusMessage = _curCarStatusMessageList,
+                    StatusMessage = new List<string>(),
                     IsFinished = _managedCar.IsFinished,
-                    TimeInTheRace = _timeInTheRace
+                    TimeInTheRace = _timeInTheRace,
+                    IsInTheRace = _isInTheRace,
                 };
+                curCarStatus.StatusMessage.AddRange(_curCarStatusMessageList);
+                Debug.WriteLine($"send message from {_managedCar.Name} + {DateTime.Now.ToString()}");
+                foreach (var item in _curCarStatusMessageList)
+                {
+                    Debug.WriteLine(item);
+                }             
                 _isStatusSent = true;
+                _curCarStatusMessageList.Clear();
                 return curCarStatus;
             }
 

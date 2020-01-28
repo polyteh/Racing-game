@@ -2,23 +2,31 @@
     ViewBag.Title = "Index";
 }
 
+
+<head>
+    <link href="~/Styles/Race.css" rel="stylesheet" type="text/css" />
+</head>
+
 <h2>Index</h2>
 
 
-<div id="tableBlock" class="table table-dark col-md-4"></div>
+<div id="tableBlock" class="table table-dark col-md-6"></div>
 
 
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <input type="button" onclick="StartRace()" value="StartRace" />
+        <input type="button" id="startRace" onclick="StartRace()" value="StartRace" />
         <input type="button" onclick="GetAlert()" value="GetAlert" />
     </div>
 </div>
+<div id="logBlock" class=" col-md-10">
+    <textarea id="textArea" class=" col-md-10"></textarea>
+</div>
+
 
 <script type="text/jscript">
 
     $(document).ready(function () {
-
         ShowAllCars()
     })
 
@@ -31,6 +39,7 @@
             dataType: 'json',
             success: function (data) {
                 WriteResponse(data);
+                WriteLog(data);
             },
             error: function (x, y, z) {
                 alert(x + '\n' + y + '\n' + z);
@@ -58,15 +67,32 @@
     //}
 
     // вывод машин в таблицу
+
     function WriteResponse(cars) {
-        var strResult = "<table><th>ID</th><th>Title</th><th>SubTitle</th><th>Body</th>";
+        var strResult = "<table><th>Place</th><th>Car name</th><th>Progress on distance</th>";
         $.each(cars, function (index, car) {
-            strResult += "<tr><td>" + car.Id + "</td><td> " + car.Name + "</td><td>" + car.DistanceCovered + "</td></tr > ";
+            strResult += "<tr><td>" + car.Place + "</td><td> " + car.Name + "</td><td>" + car.DistanceCovered + "</td></tr > ";
         });
         strResult += "</table>";
         $("#tableBlock").html(strResult);
 
     }
+    let mesCounter = 1;
+    function WriteLog(cars) {
+        var strResult = $("#textArea").val();
+        $.each(cars, function (index, car) {
+            $.each(car.StatusMessage, function (index, message) {
+                var currentdate = new Date();
+                var datetime = currentdate.getHours() + ":" + ((currentdate.getMinutes() < 10) ? "0" : "") + currentdate.getMinutes() +
+                    ":" + ((currentdate.getSeconds() < 10) ? "0" : "") + currentdate.getSeconds();
+                mesCounter++;
+                strResult += datetime + ':' + message + '\n';
+            });
+        });
+        $("#textArea").html(strResult);
+
+    }
+
 
     // начало гонки синхронно
     //function StartRace() {
@@ -79,7 +105,9 @@
 
     //начало гонки асинхронно
     function StartRace() {
-
+        //$("#startRace").css({ "disabled": "true" });
+        document.getElementById("startRace").disabled = true;
+        $("#textArea").html("Race started" + '\n')
         startRace();
         //GetStatus()
     };
@@ -87,14 +115,17 @@
 
     //обновление таблицы статуса
     function GetStatus() {
-        let statusCount = 0;
+        //        let statusCount = 0;
         let timerFunc = setInterval(function () {
             $.get("/MakeRace/IsRaceRunning", function (data) {
-                statusCount++;
+                //               statusCount++;
                 ShowAllCars();
-                alert(statusCount)
+                //              alert(statusCount)
                 var check = data.toLowerCase() == 'true' ? true : false;
                 if (check === false) {
+                    document.getElementById("startRace").disabled = false;
+                    var strRaceFinished = $("#textArea").val() + '\n' + "Race finished"
+                    $("#textArea").html(strRaceFinished)
                     clearInterval(timerFunc)
                 }
             })

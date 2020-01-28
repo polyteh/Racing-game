@@ -15,5 +15,7 @@ namespace RacingDTO.RaceWorkerEngine.Models
         public TimeSpan? TimeInTheRace { get; set; }
         public bool IsFinished { get; set; }
         public int? Place { get; set; }
+        public bool IsInTheRace { get; set; }
+        public bool IsDamaged { get; set; }
     }
 }

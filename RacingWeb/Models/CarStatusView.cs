@@ -13,6 +13,6 @@ namespace RacingWeb.Models
         public List<string> StatusMessage { get; set; }
         public TimeSpan? TimeInTheRace { get; set; }
         public bool IsFinished { get; set; }
-        public int? Place { get; set; }
+        public int Place { get; set; }
     }
 }

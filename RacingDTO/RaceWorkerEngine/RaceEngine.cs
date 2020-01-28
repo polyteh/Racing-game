@@ -10,8 +10,9 @@ namespace RacingDTO.RaceWorkerEngine
 {
     public class RaceEngine : IRaceWorker
     {
-       // private readonly RaceConfiguration _raceConfiguration;
+        // private readonly RaceConfiguration _raceConfiguration;
         RaceWorker _newRace;
+        bool _isRaceRunning = false;
         public RaceEngine()
         {
 
@@ -22,10 +23,12 @@ namespace RacingDTO.RaceWorkerEngine
             CarNormalization();
             Task[] carsInTheRace = new Task[_newRace.CarList.Count()];
 
-
+            _isRaceRunning = true;
             //сделать Move асинхронно
-            var tasks = _newRace.CarList.Select(car => Task.Run(() => {
-                car.Move(new RaceConfiguration()); })).ToList();
+            var tasks = _newRace.CarList.Select(car => Task.Run(() =>
+            {
+                car.Move(new RaceConfiguration());
+            })).ToList();
 
             await Task.WhenAll(tasks);
 
@@ -50,12 +53,17 @@ namespace RacingDTO.RaceWorkerEngine
             {
                 raceStatus.Add(item.GetStatus());
             }
-            List<CarStatusWorker>  sortedRaceStatus=raceStatus.OrderBy(x => x.TimeInTheRace).ThenBy(x => x.IsFinished).ToList();
+            _isRaceRunning = raceStatus.Any(x => x.IsInTheRace);
+            List<CarStatusWorker> sortedRaceStatus = raceStatus.OrderByDescending(x => x.DistanceCovered).ThenBy(x => x.IsFinished).ToList();
             for (int i = 0; i < sortedRaceStatus.Count(); i++)
             {
                 sortedRaceStatus[i].Place = (i + 1);
             }
             return sortedRaceStatus;
+        }
+        public bool IsRaceRunning()
+        {
+            return _isRaceRunning;
         }
         private void CarNormalization()
         {

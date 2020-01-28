@@ -49,25 +49,12 @@ namespace RacingWeb.Controllers
                 return Json(raceView.CarList, JsonRequestBehavior.AllowGet);
             }
             List<CarStatusDTO> carStatusList = _raceService.GetRaceStatus();
-
+            carStatusList.OrderByDescending(x=>x.Place);
             return Json(_mapper.Map<IEnumerable<CarStatusView>>(carStatusList), JsonRequestBehavior.AllowGet);
         }
-        //синхронный метод. При нем нет возврата в _raceService.StartRace(newBLRace) после завершения гонки
-        //[HttpGet]
-        //public void StartRace()
-        //{
-        //    _newRaceView = (RaceView)Session["raceView"];
-        //    _raceService = (IRaceService)Session["raceService"];
-        //    _newRaceView.isStarted = true;
-        //    var newBLRace = _mapper.Map<RaceDTO>((RaceView)Session["raceView"]);
-        //    Session["raceService"] = _raceService;
-        //    Session["raceView"] = _newRaceView;
-        //    _raceService.StartRace(newBLRace);
-        //}
-
-        //асинхронный метод.При нем нем блокируется вывод
+        //синхронный метод.При нем нет возврата в _raceService.StartRace(newBLRace) после завершения гонки
         [HttpGet]
-        public async Task StartRace()
+        public void StartRace()
         {
             _newRaceView = (RaceView)Session["raceView"];
             _raceService = (IRaceService)Session["raceService"];
@@ -75,10 +62,23 @@ namespace RacingWeb.Controllers
             var newBLRace = _mapper.Map<RaceDTO>((RaceView)Session["raceView"]);
             Session["raceService"] = _raceService;
             Session["raceView"] = _newRaceView;
-            await _raceService.StartRace(newBLRace);
-
-
+            _raceService.StartRace(newBLRace);
         }
+
+        //асинхронный метод.При нем нем блокируется вывод
+        //[HttpGet]
+        //public async Task StartRace()
+        //{
+        //    _newRaceView = (RaceView)Session["raceView"];
+        //    _raceService = (IRaceService)Session["raceService"];
+        //    _newRaceView.isStarted = true;
+        //    var newBLRace = _mapper.Map<RaceDTO>((RaceView)Session["raceView"]);
+        //    Session["raceService"] = _raceService;
+        //    Session["raceView"] = _newRaceView;
+        //    await _raceService.StartRace(newBLRace);
+
+
+        //}
 
 
         //public ActionResult isRaceRunning()
