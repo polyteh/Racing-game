@@ -80,18 +80,23 @@ namespace RacingWeb.Controllers
 
         //}
 
+        public void PauseRace()
+        {
+            _raceService = (IRaceService)Session["raceService"];
+            _raceService.PauseRace();
+        }
 
-        //public ActionResult isRaceRunning()
-        //{
-        //    _raceService = (IRaceService)Session["raceService"];
-        //    return Json(_raceService.isRunning(),JsonRequestBehavior.AllowGet);
-        //}
+        public void ResumeRace()
+        {
+            _raceService = (IRaceService)Session["raceService"];
+            _raceService.ResumeRace();
+        }
 
         public bool IsRaceRunning()
         {
             _raceService = (IRaceService)Session["raceService"];
-            Debug.WriteLine($"Race from controller: {_raceService.isRunning()}");
-            return _raceService.isRunning();
+            Debug.WriteLine($"Race from controller: {_raceService.IsRunning()}");
+            return _raceService.IsRunning();
         }
 
 

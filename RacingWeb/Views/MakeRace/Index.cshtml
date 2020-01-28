@@ -15,8 +15,10 @@
 
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <input type="button" id="startRace" onclick="StartRace()" value="StartRace" />
+        <input type="button" id="startRace" onclick="StartRace()" value="Start Race" />
         <input type="button" onclick="GetAlert()" value="GetAlert" />
+        <input type="button" id="pauseRace" onclick="PauseRace()" value="Pause Race" />
+        <input type="button" id="resumeRace" onclick="ResumeRace()" value="Resume Race" />
     </div>
 </div>
 <div id="logBlock" class=" col-md-10">
@@ -111,6 +113,20 @@
         startRace();
         //GetStatus()
     };
+    function PauseRace() {
+        $.ajax({
+            url: '/MakeRace/PauseRace',
+            type: 'GET',
+            dataType: 'json',
+        });
+    }
+    function ResumeRace() {
+        $.ajax({
+            url: '/MakeRace/ResumeRace',
+            type: 'GET',
+            dataType: 'json',
+        });
+    }
 
 
     //обновление таблицы статуса

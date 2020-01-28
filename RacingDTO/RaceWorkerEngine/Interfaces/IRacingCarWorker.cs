@@ -9,6 +9,7 @@ namespace RacingDTO.RaceWorkerEngine.Interfaces
     public interface IRacingCarWorker
     {
         void Move(RaceConfiguration raceConfiguration);
+        void Pause();
 
     }
 }

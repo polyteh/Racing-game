@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RacingDTO.RaceWorkerEngine
@@ -13,6 +14,7 @@ namespace RacingDTO.RaceWorkerEngine
         // private readonly RaceConfiguration _raceConfiguration;
         RaceWorker _newRace;
         bool _isRaceRunning = false;
+        private ManualResetEventSlim mres = new ManualResetEventSlim(true);
         public RaceEngine()
         {
 
@@ -27,6 +29,7 @@ namespace RacingDTO.RaceWorkerEngine
             //сделать Move асинхронно
             var tasks = _newRace.CarList.Select(car => Task.Run(() =>
             {
+                mres.Wait();
                 car.Move(new RaceConfiguration());
             })).ToList();
 
@@ -42,9 +45,12 @@ namespace RacingDTO.RaceWorkerEngine
             //});
             //Parallel.ForEach(carsInTheRace, task => task.Start());
         }
-        public void StopRace()
+        public void PauseRace()
         {
-            throw new NotImplementedException();
+            foreach (var item in _newRace.CarList)
+            {
+                item.Pause();
+            }
         }
         public List<CarStatusWorker> GetStatus()
         {
@@ -95,5 +101,14 @@ namespace RacingDTO.RaceWorkerEngine
                 item.Suspention.NormilizedRigidityKoef = (double)item.Suspention.RigidityKoef / maxRigidCoef;
             }
         }
+
+        public void ResumeRace()
+        {
+            foreach (var item in _newRace.CarList)
+            {
+                item.Resume();
+            }
+        }
+
     }
 }

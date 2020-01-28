@@ -26,6 +26,7 @@ namespace RacingDTO.RaceWorkerEngine
         private bool _isInTheRace;
         private RacingCarWorker _managedCar;
         private object _locker = new object();
+        private ManualResetEventSlim mres = new ManualResetEventSlim(true);
         public RacingCarEngine(RacingCarWorker curCar, RaceConfiguration curRaceConf)
         {
             _managedCar = curCar;
@@ -44,8 +45,9 @@ namespace RacingDTO.RaceWorkerEngine
             }
             do
             {
+                mres.Wait();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Car {_managedCar.Name} on the thread { countThread.ManagedThreadId}");
+                Debug.WriteLine($"Car {_managedCar.Name} on the thread { countThread.ManagedThreadId}");
                 Console.ForegroundColor = ConsoleColor.White;
                 if (IsFailure())
                 {
@@ -263,6 +265,15 @@ namespace RacingDTO.RaceWorkerEngine
                 return curCarStatus;
             }
 
+        }
+
+        public void Pause()
+        {
+            mres.Reset();
+        }
+        public void Resume()
+        {
+            mres.Set();
         }
     }
 }

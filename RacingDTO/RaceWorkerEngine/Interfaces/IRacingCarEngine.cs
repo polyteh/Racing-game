@@ -10,6 +10,8 @@ namespace RacingDTO.RaceWorkerEngine.Interfaces
     public interface IRacingCarEngine
     {
         void Move();
+        void Pause();
+        void Resume();
         CarStatusWorker GetStatus();
     }
 }

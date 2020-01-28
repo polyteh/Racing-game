@@ -59,6 +59,16 @@ namespace RacingDTO.Services
         {
             throw new NotImplementedException();
         }
-        public bool isRunning() => newRaceWorker.IsRaceRunning();
+        public bool IsRunning() => newRaceWorker.IsRaceRunning();
+
+        public void PauseRace()
+        {
+            newRaceWorker.PauseRace();
+        }
+
+        public void ResumeRace()
+        {
+            newRaceWorker.ResumeRace();
+        }
     }
 }

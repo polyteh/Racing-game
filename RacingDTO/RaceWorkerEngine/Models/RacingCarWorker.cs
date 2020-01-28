@@ -32,5 +32,14 @@ namespace RacingDTO.RaceWorkerEngine.Models
         {
             return _racingCarEngine.GetStatus();
         }
+
+        public void Pause()
+        {
+            _racingCarEngine.Pause();
+        }
+        public void Resume()
+        {
+            _racingCarEngine.Resume();
+        }
     }
 }

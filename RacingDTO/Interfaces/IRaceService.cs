@@ -13,6 +13,8 @@ namespace RacingDTO.Interfaces
         Task StartRace(RaceDTO newRace);
 
         List<CarStatusDTO> GetRaceStatus();
-        bool isRunning();
+        bool IsRunning();
+        void PauseRace();
+        void ResumeRace();
     }
 }
