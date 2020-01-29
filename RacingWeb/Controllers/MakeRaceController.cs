@@ -76,8 +76,6 @@ namespace RacingWeb.Controllers
         //    Session["raceService"] = _raceService;
         //    Session["raceView"] = _newRaceView;
         //    await _raceService.StartRace(newBLRace);
-
-
         //}
 
         public void PauseRace()
@@ -98,7 +96,5 @@ namespace RacingWeb.Controllers
             Debug.WriteLine($"Race from controller: {_raceService.IsRunning()}");
             return _raceService.IsRunning();
         }
-
-
     }
 }

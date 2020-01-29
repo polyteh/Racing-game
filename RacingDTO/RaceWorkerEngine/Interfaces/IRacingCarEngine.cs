@@ -13,5 +13,6 @@ namespace RacingDTO.RaceWorkerEngine.Interfaces
         void Pause();
         void Resume();
         CarStatusWorker GetStatus();
+        bool IsInTheRace();
     }
 }

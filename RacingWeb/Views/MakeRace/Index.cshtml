@@ -29,7 +29,9 @@
 <script type="text/jscript">
 
     $(document).ready(function () {
-        ShowAllCars()
+        ShowAllCars();
+        document.getElementById("pauseRace").disabled = true;
+        document.getElementById("resumeRace").disabled = true;
     })
 
 
@@ -79,7 +81,6 @@
         $("#tableBlock").html(strResult);
 
     }
-    let mesCounter = 1;
     function WriteLog(cars) {
         var strResult = $("#textArea").val();
         $.each(cars, function (index, car) {
@@ -87,7 +88,6 @@
                 var currentdate = new Date();
                 var datetime = currentdate.getHours() + ":" + ((currentdate.getMinutes() < 10) ? "0" : "") + currentdate.getMinutes() +
                     ":" + ((currentdate.getSeconds() < 10) ? "0" : "") + currentdate.getSeconds();
-                mesCounter++;
                 strResult += datetime + ':' + message + '\n';
             });
         });
@@ -95,59 +95,56 @@
 
     }
 
-
-    // начало гонки синхронно
-    //function StartRace() {
-
-    //    startRace()
-    //    //$.get("/MakeRace/StartRace");
-    //    GetStatus()
-    //};
-
-
     //начало гонки асинхронно
     function StartRace() {
-        //$("#startRace").css({ "disabled": "true" });
         document.getElementById("startRace").disabled = true;
+        document.getElementById("pauseRace").disabled = false;
         $("#textArea").html("Race started" + '\n')
         startRace();
-        //GetStatus()
-    };
+    }
+
+    var isPaused = false;
+    //пауза гонки
     function PauseRace() {
-        $.ajax({
-            url: '/MakeRace/PauseRace',
-            type: 'GET',
-            dataType: 'json',
-        });
+        isPaused = true;
+        document.getElementById("resumeRace").disabled = false;
+        document.getElementById("pauseRace").disabled = true;
+        pauseRace();
     }
+
     function ResumeRace() {
-        $.ajax({
-            url: '/MakeRace/ResumeRace',
-            type: 'GET',
-            dataType: 'json',
-        });
+        isPaused = false;
+        document.getElementById("resumeRace").disabled = true;
+        document.getElementById("pauseRace").disabled = false;
+        resumeRace();
     }
 
 
-    //обновление таблицы статуса
+
+
+
+    //обновление таблицы статусаk
     function GetStatus() {
-        //        let statusCount = 0;
         let timerFunc = setInterval(function () {
             $.get("/MakeRace/IsRaceRunning", function (data) {
-                //               statusCount++;
                 ShowAllCars();
-                //              alert(statusCount)
                 var check = data.toLowerCase() == 'true' ? true : false;
                 if (check === false) {
-                    document.getElementById("startRace").disabled = false;
-                    var strRaceFinished = $("#textArea").val() + '\n' + "Race finished"
-                    $("#textArea").html(strRaceFinished)
+                    if (isPaused === false) {
+                        document.getElementById("startRace").disabled = false;
+                        document.getElementById("resumeRace").disabled = true;
+                        document.getElementById("pauseRace").disabled = true;
+                        var strRaceFinished = $("#textArea").val() + "Race finished"
+                        $("#textArea").html(strRaceFinished)
+                    }
+                    var strRaceFinished = $("#textArea").val() + "Race paused"+'\n'
                     clearInterval(timerFunc)
                 }
             })
         }, 500);
     };
 
+    //старт гонки
     var startRace = function startRaceAjax() {
         $.ajax({
             url: '/MakeRace/StartRace',
@@ -157,4 +154,26 @@
                 GetStatus(),
         });
     }
+
+    var pauseRace = function PauseRaceAjax() {
+        $.ajax({
+            url: '/MakeRace/PauseRace',
+            type: 'GET',
+            dataType: 'json',
+
+        });
+    }
+
+    //возобновление гонки
+    var resumeRace = function ResumeRaceAjax() {
+        $.ajax({
+            url: '/MakeRace/ResumeRace',
+            type: 'GET',
+            dataType: 'json',
+            success:
+                GetStatus(),
+        });
+    }
+
+
 </script>

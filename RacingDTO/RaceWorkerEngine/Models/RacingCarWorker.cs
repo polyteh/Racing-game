@@ -41,5 +41,10 @@ namespace RacingDTO.RaceWorkerEngine.Models
         {
             _racingCarEngine.Resume();
         }
+
+        public bool IsInTheRace()
+        {
+            return _racingCarEngine.IsInTheRace(); 
+        }
     }
 }

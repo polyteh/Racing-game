@@ -10,6 +10,8 @@ namespace RacingDTO.RaceWorkerEngine.Interfaces
     {
         void Move(RaceConfiguration raceConfiguration);
         void Pause();
+        void Resume();
+        bool IsInTheRace();
 
     }
 }

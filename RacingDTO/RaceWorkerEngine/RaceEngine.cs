@@ -2,6 +2,7 @@
 using RacingDTO.RaceWorkerEngine.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,7 +14,7 @@ namespace RacingDTO.RaceWorkerEngine
     {
         // private readonly RaceConfiguration _raceConfiguration;
         RaceWorker _newRace;
-        bool _isRaceRunning = false;
+        bool _isRaceNotPaused = true;
         private ManualResetEventSlim mres = new ManualResetEventSlim(true);
         public RaceEngine()
         {
@@ -25,7 +26,6 @@ namespace RacingDTO.RaceWorkerEngine
             CarNormalization();
             Task[] carsInTheRace = new Task[_newRace.CarList.Count()];
 
-            _isRaceRunning = true;
             //сделать Move асинхронно
             var tasks = _newRace.CarList.Select(car => Task.Run(() =>
             {
@@ -47,6 +47,8 @@ namespace RacingDTO.RaceWorkerEngine
         }
         public void PauseRace()
         {
+            Debug.WriteLine("pause");
+            _isRaceNotPaused = false;
             foreach (var item in _newRace.CarList)
             {
                 item.Pause();
@@ -59,7 +61,6 @@ namespace RacingDTO.RaceWorkerEngine
             {
                 raceStatus.Add(item.GetStatus());
             }
-            _isRaceRunning = raceStatus.Any(x => x.IsInTheRace);
             List<CarStatusWorker> sortedRaceStatus = raceStatus.OrderByDescending(x => x.DistanceCovered).ThenBy(x => x.IsFinished).ToList();
             for (int i = 0; i < sortedRaceStatus.Count(); i++)
             {
@@ -69,7 +70,19 @@ namespace RacingDTO.RaceWorkerEngine
         }
         public bool IsRaceRunning()
         {
-            return _isRaceRunning;
+            List<bool> raceRunningStatus = new List<bool>();
+            foreach (var item in _newRace.CarList)
+            {
+                raceRunningStatus.Add(item.IsInTheRace());
+                Debug.WriteLine($"Car status {item.Name} + {item.IsInTheRace()}");
+            }
+            bool status = raceRunningStatus.Any(x=>x==true);
+            Debug.WriteLine($"is race running {status}");
+            return status;
+        }
+        public bool IsRaceNotPaused()
+        {
+            return _isRaceNotPaused;
         }
         private void CarNormalization()
         {
@@ -104,6 +117,8 @@ namespace RacingDTO.RaceWorkerEngine
 
         public void ResumeRace()
         {
+            Debug.WriteLine("resume");
+            _isRaceNotPaused = true;
             foreach (var item in _newRace.CarList)
             {
                 item.Resume();
