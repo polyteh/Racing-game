@@ -1,7 +1,49 @@
-﻿#textArea {
-    overflow-y: scroll;
-    height: 200px;
-    width: 400px;
-    resize: none;
-    color: blue;
+﻿/*#textArea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+}*/
+
+.container_row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
 }
+
+.container_column {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.block {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.textAreaPanel {
+    width: 100%;
+    border: 1px solid #000;
+    box-sizing: border-box;
+}
+
+    .textAreaPanel textarea {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        min-height:300px;
+        height:auto;
+        max-width: 100%;
+    }

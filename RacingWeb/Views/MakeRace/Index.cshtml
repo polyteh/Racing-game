@@ -7,24 +7,27 @@
     <link href="~/Styles/Race.css" rel="stylesheet" type="text/css" />
 </head>
 
-<h2>Index</h2>
+<body>
+    <div class="wrap">
+        <div class="container_row" id="outerContainer">
+            <div class="container_column" id="innerContainer">
+                <div id="tableBlock" class="table table-dark"></div>
+                <div class="textAreaPanel"><textarea id="textArea" rows="10"></textarea> </div>
+            </div>
+            <div class="container_column" id="buttonContainer">
+                <input type="button" class="btn btn-primary block" id="startRace" onclick="StartRace()" value="Start Race" />
+                <input type="button" class="btn btn-primary block" onclick="GetAlert()" value="GetAlert" />
+                <input type="button" class="btn btn-primary block" id="pauseRace" onclick="PauseRace()" value="Pause Race" />
+                <input type="button" class="btn btn-primary block" id="resumeRace" onclick="ResumeRace()" value="Resume Race" />
+            </div>
 
-
-<div id="tableBlock" class="table table-dark col-md-6"></div>
-
-
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="button" id="startRace" onclick="StartRace()" value="Start Race" />
-        <input type="button" onclick="GetAlert()" value="GetAlert" />
-        <input type="button" id="pauseRace" onclick="PauseRace()" value="Pause Race" />
-        <input type="button" id="resumeRace" onclick="ResumeRace()" value="Resume Race" />
+        </div>
     </div>
-</div>
-<div id="logBlock" class=" col-md-10">
-    <textarea id="textArea" class=" col-md-10"></textarea>
-</div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
 
+</body>
 
 <script type="text/jscript">
 
@@ -55,20 +58,7 @@
         alert("alert")
     };
 
-    //    // происходит ли гонка
-    //function IsRaceRunning() {
-    //    $.ajax({
-    //        url: '/MakeRace/isRaceRunning/',
-    //        type: 'get',
-    //        dataType: 'json',
-    //        success: function (data) {
-    //            GetStatus(data);
-    //        },
-    //        error: function (x, y, z) {
-    //            alert(x + '\n' + y + '\n' + z);
-    //        }
-    //    });
-    //}
+
 
     // вывод машин в таблицу
 
@@ -137,7 +127,7 @@
                         var strRaceFinished = $("#textArea").val() + "Race finished"
                         $("#textArea").html(strRaceFinished)
                     }
-                    var strRaceFinished = $("#textArea").val() + "Race paused"+'\n'
+                    var strRaceFinished = $("#textArea").val() + "Race paused" + '\n'
                     clearInterval(timerFunc)
                 }
             })
