@@ -44,6 +44,7 @@ namespace RacingWeb.Controllers
         }
 
         // GET: Engine/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
