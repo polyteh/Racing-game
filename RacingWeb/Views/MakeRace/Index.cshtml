@@ -23,10 +23,6 @@
 
         </div>
     </div>
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-
 </body>
 
 <script type="text/jscript">
@@ -124,7 +120,7 @@
                         document.getElementById("startRace").disabled = false;
                         document.getElementById("resumeRace").disabled = true;
                         document.getElementById("pauseRace").disabled = true;
-                        var strRaceFinished = $("#textArea").val() + "Race finished"
+                        var strRaceFinished = $("#textArea").val() //+ "Race finished"
                         $("#textArea").html(strRaceFinished)
                     }
                     var strRaceFinished = $("#textArea").val() + "Race paused" + '\n'
