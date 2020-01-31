@@ -90,10 +90,12 @@ namespace RacingWeb.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(model);
         }
-        public ActionResult Logout()
+        [HttpPost]
+        public ActionResult Logout(string ReturnUrl)
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index","Home");
+           // return RedirectToAction("Index","Home");
+            return Redirect(ReturnUrl);
         }
         [HttpPost]
         public void OnWindowClosing()
