@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNetCore.Identity;
 using Ninject;
 using RacingDTO.Interfaces;
 using RacingDTO.Models;
 using RacingWeb.Models;
+using RacingWeb.Security.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +51,17 @@ namespace RacingWeb.Controllers
         [Authorize]
         public ActionResult Create()
         {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
             return View();
+        }
+
+        private ApplicationUserManager UserManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
         }
 
         // POST: Engine/Create
@@ -68,6 +82,7 @@ namespace RacingWeb.Controllers
         }
 
         // GET: Engine/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)

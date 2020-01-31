@@ -55,7 +55,7 @@ namespace RacingWeb.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-
+        [HttpGet]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.returnUrl = returnUrl;
@@ -93,7 +93,14 @@ namespace RacingWeb.Controllers
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Login");
+            return RedirectToAction("Index","Home");
+        }
+        [HttpPost]
+        public void OnWindowClosing()
+        {
+            AuthenticationManager.SignOut();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+        
         }
     }
 }
