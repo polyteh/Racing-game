@@ -100,9 +100,7 @@ namespace RacingWeb.Controllers
         [HttpPost]
         public void OnWindowClosing()
         {
-            AuthenticationManager.SignOut();
-            var user = UserManager.FindById(User.Identity.GetUserId());
-        
+            AuthenticationManager.SignOut();    
         }
     }
 }

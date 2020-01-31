@@ -10,47 +10,9 @@
 </head>
 <body>
 
-    @*@using Microsoft.AspNet.Identity
-        @if (Request.IsAuthenticated)
-        {
-            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-            {
-                @Html.AntiForgeryToken()
-                    <button type="button" class="btn navbar-btn" style="background-color:forestgreen">@User.Identity.Name</button>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="@Url.Action("Logout", "Account")">
-                            Log off
-                            <span class="glyphicon glyphicon-log-out"></span>
-                        </a>
-                    </li>
-                </ul>
-            }
-        }
-        else
-        {
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="@Url.Action("Register", "Account")">
-                        <span class="glyphicon glyphicon-registration-mark"></span>
-                        Register
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Login", "Account")">
-                        <span class="glyphicon glyphicon-log-in"></span>
-                        Login
-                    </a>
-                </li>
-            </ul>
-        }*@
 
 
-
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -58,24 +20,33 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="@Url.Action("Index", "Home")">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
+
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Manage components
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="@Url.Action("Index", "Components")">Components manager</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Engine")">Engines</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Brakes")">Brakes</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="@Url.Action("Index", "RacingCar")">Manage cars</a>
+                </li>
+
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Racing
+                    </a>
+                    <div class="dropdown-menu bg-primary nav-item" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="@Url.Action("Index", "Racing")">Racing center</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "RaceCarsSelector")">Race</a>
+                        <a class="dropdown-item" href="#" aria-disabled="true">View result</a>
+                    </div>
                 </li>
             </ul>
             @Html.Partial("_LoginPartial")
