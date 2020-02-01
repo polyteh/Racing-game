@@ -12,7 +12,7 @@ namespace RacingWeb.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Model name")]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = "Model should be in the range 3..20 characters")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Model name should be in the range 3..20 characters")]
         [Remote("CheckModelName", "Engine", ErrorMessage = "Model name already exists")]
         public string Name { get; set; }
         [Required]
