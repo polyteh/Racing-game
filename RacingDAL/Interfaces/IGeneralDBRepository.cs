@@ -17,5 +17,7 @@ namespace RacingDAL.Interfaces
         Task UpdateAsync(TEntity item);
         IEnumerable<TEntity> GetAll();
         TEntity FindById(int id);
+        Task<TEntity> FindByModelAsync(string model);
+        TEntity FindByModel(string model);
     }
 }

@@ -93,5 +93,16 @@ namespace RacingDAL
             var itemById = _dbSet.SingleOrDefault<TEntity>(e => e.Id == id);
             return itemById;
         }
+
+        public async Task< TEntity> FindByModelAsync(string model)
+        {
+            var itemByModel = await _dbSet.SingleOrDefaultAsync<TEntity>(e => e.Name==model);
+            return itemByModel;
+        }
+        public TEntity FindByModel(string model)
+        {
+            var itemByModel =  _dbSet.SingleOrDefault<TEntity>(e => e.Name == model);
+            return itemByModel;
+        }
     }
 }

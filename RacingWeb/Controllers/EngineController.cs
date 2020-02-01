@@ -139,6 +139,25 @@ namespace RacingWeb.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
+        [HttpGet]
+        public JsonResult CheckModelName(string name)
+        {
+            //var getItemByModel = _engineService.FindByModelAsync(name);
+            //bool ifModelNameExists = getItemByModel==null ? true : false;
+            //return Json(ifModelNameExists, JsonRequestBehavior.AllowGet);
+            return Json(IsModelNameOccuped(name), JsonRequestBehavior.AllowGet);
+        }
+        //async doestn work
+        private async Task<bool> isModelNameExistsAsync(string modelName)
+        {
+            var getItemByModel = await _engineService.FindByModelAsync(modelName);
+            return getItemByModel != null ? true : false;
+        }
+        private bool IsModelNameOccuped(string modelName)
+        {
+            var getItemByModel = _engineService.FindByModel(modelName);
+            return getItemByModel != null ? false : true;
+        }
     }
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace RacingWeb.Models
 {
@@ -12,6 +13,7 @@ namespace RacingWeb.Models
         [Required]
         [Display(Name = "Model name")]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "Model should be in the range 3..20 characters")]
+        [Remote("CheckModelName", "Engine", ErrorMessage = "Model name already exists")]
         public string Name { get; set; }
         [Required]
         [Range(140, 300, ErrorMessage = "HP is out of range. Should be 140..300")]
