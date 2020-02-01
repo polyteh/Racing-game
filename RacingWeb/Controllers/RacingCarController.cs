@@ -6,6 +6,7 @@ using RacingWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -69,12 +70,21 @@ namespace RacingWeb.Controllers
         }
 
         // GET: RacingCar/Edit/5
-        public async Task<ActionResult> Edit(int id)
+        [Authorize]
+        public async Task<ActionResult> Edit(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var carDTO = await _racingCarService.FindByIdAsync(id);
-            await MakeDropDownMenuLists();
-            var carView = _mapper.Map<RacingCarView>(carDTO);
-            return View(carView);
+            if (carDTO != null)
+            {
+                await MakeDropDownMenuLists();
+                var carView = _mapper.Map<RacingCarView>(carDTO);
+                return View(carView);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
         // POST: RacingCar/Edit/5
@@ -95,8 +105,12 @@ namespace RacingWeb.Controllers
         }
 
         // GET: RacingCar/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             return View();
         }
 
