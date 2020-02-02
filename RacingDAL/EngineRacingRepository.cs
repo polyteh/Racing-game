@@ -14,5 +14,16 @@ namespace RacingDAL
         {
 
         }
+        public override async Task<bool> RemoveAsync(int? id)
+        {
+            var itemBuId = _dbSet.Include(x=>x.RacingCar).SingleOrDefault(e => e.Id == id);
+            if (itemBuId.RacingCar.Count()==0)
+            {
+                _dbSet.Remove(itemBuId);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }

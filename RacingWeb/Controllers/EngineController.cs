@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNetCore.Identity;
 using Ninject;
 using RacingDTO.Interfaces;
 using RacingDTO.Models;
 using RacingWeb.Models;
+using RacingWeb.Security.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,9 +48,20 @@ namespace RacingWeb.Controllers
         }
 
         // GET: Engine/Create
+        [Authorize]
         public ActionResult Create()
         {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
             return View();
+        }
+
+        private ApplicationUserManager UserManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
         }
 
         // POST: Engine/Create
@@ -67,6 +82,7 @@ namespace RacingWeb.Controllers
         }
 
         // GET: Engine/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,8 +116,13 @@ namespace RacingWeb.Controllers
         }
 
         // GET: Engine/Delete/5
-        public async Task<ActionResult> Delete(int id)
+        [Authorize]
+        public async Task<ActionResult> Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var engineToDeleteDTO = await _engineService.FindByIdAsync(id);
             if (engineToDeleteDTO == null)
             {
@@ -122,6 +143,27 @@ namespace RacingWeb.Controllers
                 return RedirectToAction("Index");
             }
             return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+        }
+        [HttpGet]
+        [NonAction]
+        public JsonResult CheckModelName(string name)
+        {
+            //var getItemByModel = _engineService.FindByModelAsync(name);
+            //bool ifModelNameExists = getItemByModel==null ? true : false;
+            // return Json(IsModelNameOccupedAsync(name), JsonRequestBehavior.AllowGet);
+
+            return Json(IsModelNameOccuped(name), JsonRequestBehavior.AllowGet);
+        }
+        //async doestn work
+        private async Task<bool> IsModelNameOccupedAsync(string modelName)
+        {
+            var getItemByModel = await _engineService.FindByModelAsync(modelName);
+            return getItemByModel != null ? true : false;
+        }
+        private bool IsModelNameOccuped(string modelName)
+        {
+            var getItemByModel = _engineService.FindByModel(modelName);
+            return getItemByModel != null ? false : true;
         }
     }
 

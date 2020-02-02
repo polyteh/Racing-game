@@ -62,11 +62,7 @@ namespace RacingDAL
 
         public virtual async Task<bool> RemoveAsync(int? id)
         {
-            //_context.Entry<TEntity>(item).State = EntityState.Deleted;
-            //if (!_dbSet.Local.Contains(item))
-            //{
-            //    _dbSet.Attach(item);
-            //}
+
             var itemBuId = _dbSet.SingleOrDefault(e => e.Id == id);
             _dbSet.Remove(itemBuId);
             await _context.SaveChangesAsync();
@@ -92,6 +88,17 @@ namespace RacingDAL
         {
             var itemById = _dbSet.SingleOrDefault<TEntity>(e => e.Id == id);
             return itemById;
+        }
+
+        public async Task< TEntity> FindByModelAsync(string model)
+        {
+            var itemByModel = await _dbSet.SingleOrDefaultAsync<TEntity>(e => e.Name==model);
+            return itemByModel;
+        }
+        public TEntity FindByModel(string model)
+        {
+            var itemByModel =  _dbSet.SingleOrDefault<TEntity>(e => e.Name == model);
+            return itemByModel;
         }
     }
 }

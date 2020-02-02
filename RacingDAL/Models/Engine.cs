@@ -15,6 +15,6 @@ namespace RacingDAL.Models
         public bool Turbine { get; set; }
         public string Manufacurer { get; set; }
         public decimal Price { get; set; }
-        ICollection<RacingCar> RacingCar { get; set; }
+        public ICollection<RacingCar> RacingCar { get; set; }
     }
 }

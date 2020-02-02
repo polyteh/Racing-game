@@ -1,0 +1,7 @@
+﻿body {
+    color: darkmagenta;
+}
+.dropdownContainer {
+    display: block;
+    min-width: 250px;
+}

@@ -6,15 +6,20 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/scripts/jquery-3.3.1.min.js")
+    @*@Scripts.Render("~/scripts/jquery.validate.unobtrusive.min.js")*@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+
+
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="@Url.Action("Index", "Home")">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -23,10 +28,10 @@
                     <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Manage components
                     </a>
-                    <div class="dropdown-menu navbar-dark bg-primary" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="@Url.Action("Index", "Components")">Components manager</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "Engine")">Engines</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "Brakes")">Brakes</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Brake")">Brakes</a>
                     </div>
                 </li>
 
@@ -38,13 +43,14 @@
                     <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Racing
                     </a>
-                    <div class="dropdown-menu navbar-dark bg-primary" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu bg-primary nav-item" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="@Url.Action("Index", "Racing")">Racing center</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "RaceCarsSelector")">Race</a>
                         <a class="dropdown-item" href="#" aria-disabled="true">View result</a>
                     </div>
                 </li>
             </ul>
+            @Html.Partial("_LoginPartial")
         </div>
     </nav>
     <div class="container body-content">
@@ -60,3 +66,34 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script type="text/javascript">
+
+
+    function onWindowClosing() {
+        if (window.event.clientX < 0 || window.event.clientY < 0) {
+            $.ajax({
+                type: "POST",
+                url: "/Account/OnWindowClosing",
+            });
+        }
+    };
+
+    function onKeydown(evt) {
+        if (evt != undefined && evt.altKey && evt.keyCode == 115) //Alt + F4
+        {
+            $.ajax({
+                type: "POST",
+                url: "/Account/OnWindowClosing"
+            });
+        }
+    };
+
+    window.onbeforeunload = onWindowClosing;
+    window.document.onkeydown = onKeydown;
+
+    function Login() {
+
+    }
+
+</script>

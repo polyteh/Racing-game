@@ -64,5 +64,17 @@ namespace RacingDTO.Services
             var deleteResult = await _repository.RemoveAsync(id);
             return deleteResult;
         }
+
+        public async Task<DTOModel> FindByModelAsync(string model)
+        {
+            var itemByModel = await _repository.FindByModelAsync(model);
+            return Map(itemByModel);
+        }
+
+        public DTOModel FindByModel(string model)
+        {
+            var itemByModel =  _repository.FindByModel(model);
+            return Map(itemByModel);
+        }
     }
 }
