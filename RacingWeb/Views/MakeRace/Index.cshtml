@@ -16,9 +16,9 @@
             </div>
             <div class="container_column" id="buttonContainer">
                 <input type="button" class="btn btn-primary block" id="startRace" onclick="StartRace()" value="Start Race" />
-                <input type="button" class="btn btn-primary block" onclick="GetAlert()" value="GetAlert" />
                 <input type="button" class="btn btn-primary block" id="pauseRace" onclick="PauseRace()" value="Pause Race" />
                 <input type="button" class="btn btn-primary block" id="resumeRace" onclick="ResumeRace()" value="Resume Race" />
+                <input type="button" class="btn btn-primary block" id="saveResults" onclick="SaveResults()" value="Save results" />
             </div>
 
         </div>
@@ -28,9 +28,11 @@
 <script type="text/jscript">
 
     $(document).ready(function () {
+        CheckCars();
         ShowAllCars();
         document.getElementById("pauseRace").disabled = true;
         document.getElementById("resumeRace").disabled = true;
+        document.getElementById("saveResults").disabled = true;
     })
 
 
@@ -41,8 +43,8 @@
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                WriteResponse(data);
-                WriteLog(data);
+                    WriteResponse(data);
+                    WriteLog(data);
             },
             error: function (x, y, z) {
                 alert(x + '\n' + y + '\n' + z);
@@ -54,7 +56,15 @@
         alert("alert")
     };
 
-
+    function CheckData(cars) {
+        if (cars.length === 0) {
+            alert("no element");
+            document.getElementById("startRace").disabled = true;
+        }
+        else {
+            alert(cars.length)
+        }
+    }
 
     // вывод машин в таблицу
 
@@ -160,6 +170,22 @@
                 GetStatus(),
         });
     }
+    function CheckCars() {
+        $.ajax({
+            url: '/MakeRace/GetStatus/',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if (data.length === 0) {
+                    alert("You didnt select cars for race!");
+                    document.getElementById("startRace").disabled = true;
+                }
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    };
 
 
 </script>
