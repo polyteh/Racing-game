@@ -253,11 +253,18 @@
     <Compile Include="Migrations\202001301258004_DataMigration.designer.cs">
       <DependentUpon>202001301258004_DataMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002030949283_raceDB.cs" />
+    <Compile Include="Migrations\202002030949283_raceDB.designer.cs">
+      <DependentUpon>202002030949283_raceDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BrakeView.cs" />
     <Compile Include="Models\CarStatusView.cs" />
+    <Compile Include="Models\CarStatView.cs" />
     <Compile Include="Models\EngineView.cs" />
+    <Compile Include="Models\RaceDBView.cs" />
     <Compile Include="Models\RaceView.cs" />
+    <Compile Include="Models\RaceViewDB.cs" />
     <Compile Include="Models\RacingCarView.cs" />
     <Compile Include="Models\SimpleCarView.cs" />
     <Compile Include="Models\SuspentionView.cs" />
@@ -474,6 +481,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001301258004_DataMigration.resx">
       <DependentUpon>202001301258004_DataMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002030949283_raceDB.resx">
+      <DependentUpon>202002030949283_raceDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 // generic repository for the CRUD function for Engine, Brake and Suspention
 namespace RacingDAL
 {
-    public class GenericRacingRepository<TEntity> : IGeneralDBRepository<TEntity> where TEntity : class, IEntity
+    public class GenericRacingRepository<TEntity> : IGeneralDBRepository<TEntity> where TEntity : class, IEntity, IName
     {
         protected DbContext _context;
         protected DbSet<TEntity> _dbSet;

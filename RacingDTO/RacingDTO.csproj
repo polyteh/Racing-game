@@ -62,12 +62,15 @@
     <Compile Include="Interfaces\IBrakeService.cs" />
     <Compile Include="Interfaces\IEngineService.cs" />
     <Compile Include="Interfaces\IGenericRacingService.cs" />
+    <Compile Include="Interfaces\IRaceDBDTOService.cs" />
     <Compile Include="Interfaces\IRaceService.cs" />
     <Compile Include="Interfaces\IRacingCarService.cs" />
     <Compile Include="Interfaces\ISuspentionService.cs" />
     <Compile Include="Models\BrakeDTO.cs" />
+    <Compile Include="Models\CarStatDTO.cs" />
     <Compile Include="Models\CarStatusDTO.cs" />
     <Compile Include="Models\EngineDTO.cs" />
+    <Compile Include="Models\RaceDBDTO.cs" />
     <Compile Include="Models\RaceDTO.cs" />
     <Compile Include="Models\RacingCarDTO.cs" />
     <Compile Include="Models\SimpleCarDTO.cs" />
@@ -91,6 +94,7 @@
     <Compile Include="Services\BrakeService.cs" />
     <Compile Include="Services\EngineService.cs" />
     <Compile Include="Services\GenericService.cs" />
+    <Compile Include="Services\RaceDbDTOService.cs" />
     <Compile Include="Services\RaceService.cs" />
     <Compile Include="Services\RacingCarService.cs" />
     <Compile Include="Services\SuspentionService.cs" />

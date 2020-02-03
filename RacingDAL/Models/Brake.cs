@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RacingDAL.Models
 {
-    public class Brake : IEntity
+    public class Brake : IEntity, IName
     {
         public int Id { get; set; }
         public string Name { get; set; }
