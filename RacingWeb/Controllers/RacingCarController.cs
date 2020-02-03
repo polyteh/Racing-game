@@ -152,5 +152,16 @@ namespace RacingWeb.Controllers
             SelectList suspentions = new SelectList(listViewSuspentions, "Id", "Name");
             ViewBag.Suspention = suspentions;
         }
+        [HttpGet]
+        public JsonResult CheckModelName(string name)
+        {
+            return Json(IsModelNameOccuped(name), JsonRequestBehavior.AllowGet);
+        }
+
+        private bool IsModelNameOccuped(string modelName)
+        {
+            var getItemByModel = _racingCarService.FindByModel(modelName);
+            return getItemByModel != null ? false : true;
+        }
     }
 }

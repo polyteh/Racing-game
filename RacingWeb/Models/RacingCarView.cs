@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace RacingWeb.Models
 {
     public class RacingCarView
     {
         public int Id { get; set; }
-        [Display(Name = "Model name")]
         [Required]
+        [Display(Name = "Model name")]
+        [Remote("CheckModelName", "RacingCar", ErrorMessage = "Model name already exists")]
         public string Name { get; set; }
         public int BrakeId { get; set; }
         [Display(Name = "Brake model name")]
