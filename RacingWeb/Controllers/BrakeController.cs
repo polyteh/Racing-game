@@ -124,7 +124,6 @@ namespace RacingWeb.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
         [HttpGet]
-        [NonAction]
         public JsonResult CheckModelName(string name)
         {
             return Json(IsModelNameOccuped(name), JsonRequestBehavior.AllowGet);

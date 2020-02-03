@@ -145,7 +145,6 @@ namespace RacingWeb.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
         [HttpGet]
-        [NonAction]
         public JsonResult CheckModelName(string name)
         {
             //var getItemByModel = _engineService.FindByModelAsync(name);

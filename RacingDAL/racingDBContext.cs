@@ -23,10 +23,6 @@ namespace RacingDAL
             modelBuilder.Entity<RacingCar>().ToTable("RacingCars");
             modelBuilder.Entity<Suspention>().ToTable("Suspentions");
         }
-        //public DbSet<Brake> Brakes { get; set; }
-        //public DbSet<Engine> Engines { get; set; }
-        //public DbSet<RacingCar> RacingCars { get; set; }
-        //public DbSet<Suspention> Suspentions { get; set; }
     }
 }
 

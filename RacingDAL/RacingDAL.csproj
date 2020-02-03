@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrakesRacingRepository.cs" />
     <Compile Include="CarRacingRepository.cs" />
     <Compile Include="EngineRacingRepository.cs" />
     <Compile Include="GenericRacingRepository.cs" />

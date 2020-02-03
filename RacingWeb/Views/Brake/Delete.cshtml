@@ -1,6 +1,10 @@
-﻿@model RacingWeb.Models.EngineView
+﻿@model RacingWeb.Models.BrakeView
 
-<h3>Are you sure you want to delete this engine?</h3>
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Are you sure you want to delete this brakes?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -13,19 +17,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.HP)
+            @Html.DisplayNameFor(model => model.EffecientKoef)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.HP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Turbine)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Turbine)
+            @Html.DisplayFor(model => model.EffecientKoef)
         </dd>
 
         <dt>
@@ -46,11 +42,12 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete engine" class="btn btn-primary" /> 
+            <input type="submit" value="Delete engine" class="btn btn-primary" />
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

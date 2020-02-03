@@ -105,29 +105,33 @@ namespace RacingWeb.Controllers
         }
 
         // GET: RacingCar/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View();
+            var racingCarToDeleteDTO = await _racingCarService.FindByIdAsync(id);
+            if (racingCarToDeleteDTO == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            var racingCarToDeleteView = _mapper.Map<RacingCarView>(racingCarToDeleteDTO);
+            return View(racingCarToDeleteView);
+
         }
 
         // POST: RacingCar/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id, FormCollection collection)
         {
-            try
+            var deleteResult = await _racingCarService.RemoveAsync(id);
+            if (deleteResult)
             {
-                // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
         //как блин, это работает (SelectList)???
         //данные для DropList
