@@ -19,16 +19,16 @@ namespace RacingWeb.Controllers
     {
         //как можно сделать readonly?
         private IRaceService _raceService;
-        private IRaceDBDTOService _raceceDBService;
+        private readonly IRaceDBDTOService _raceceDBService;
         private readonly IMapper _mapper;
         private RaceView _newRaceView;
         //to do  inject
         [Inject]
-        public MakeRaceController(IRaceService raceService, IMapper mapper, IRaceDBDTOService raceceDBService)
+        public MakeRaceController(IRaceService raceService, IMapper mapper, IRaceDBDTOService raceDBService)
         {
             _raceService = raceService;
             _mapper = mapper;
-            _raceceDBService = raceceDBService;
+            _raceceDBService = raceDBService;
             _newRaceView = new RaceView();
         }
         // GET: MakeRace

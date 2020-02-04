@@ -18,6 +18,11 @@ namespace RacingDAL
         {
             return await _dbSet.Include(x => x.CarStat).ToListAsync();
         }
+        public override IEnumerable<Race> GetAll()
+        {
+            var items = _dbSet.Include(x => x.CarStat.Select(y=>y.RacingCar)).ToList();
+            return items;
+        }
 
     }
 }

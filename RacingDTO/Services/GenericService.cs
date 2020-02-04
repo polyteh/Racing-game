@@ -76,5 +76,11 @@ namespace RacingDTO.Services
             var itemByModel =  _repository.FindByModel(model);
             return Map(itemByModel);
         }
+
+        public IEnumerable<DTOModel> GetAll()
+        {
+            var listOfDal =  _repository.GetAll();
+            return Map(listOfDal);
+        }
     }
 }

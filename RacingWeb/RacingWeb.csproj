@@ -242,6 +242,7 @@
     <Compile Include="Controllers\RaceCarsSelectorController.cs" />
     <Compile Include="Controllers\RacingCarController.cs" />
     <Compile Include="Controllers\RacingController.cs" />
+    <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -294,6 +295,9 @@
     <Content Include="Images\Parts.png" />
     <Content Include="Images\Race.png" />
     <Content Include="Images\RaceResults.png" />
+    <Content Include="Images\sort_asc.png" />
+    <Content Include="Images\sort_both.png" />
+    <Content Include="Images\sort_desc.png" />
     <Content Include="Images\Start_race.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -324,6 +328,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -402,6 +407,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Styles\jquery.dataTables.min.css" />
     <Content Include="Styles\Race.css" />
     <Content Include="Styles\RacingCarEditor.css" />
     <Content Include="Web.config" />
@@ -448,6 +454,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Brake\Delete.cshtml" />
     <Content Include="Views\RacingCar\Delete.cshtml" />
+    <Content Include="Views\Result\Index.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
