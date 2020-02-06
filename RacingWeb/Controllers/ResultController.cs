@@ -30,7 +30,7 @@ namespace RacingWeb.Controllers
                     car.Place
                 }
                 ).ToList();
-            return View();// Json(dataToShow, JsonRequestBehavior.AllowGet);
+            return View();
         }
         [HttpGet]
         public string GetResults()
@@ -46,9 +46,6 @@ namespace RacingWeb.Controllers
                 ).ToList();
             System.Web.Script.Serialization.JavaScriptSerializer jSearializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             return jSearializer.Serialize(dataToShow);
-
-            //return Json(dataToShow, JsonRequestBehavior.AllowGet);
         }
-
     }
 }
