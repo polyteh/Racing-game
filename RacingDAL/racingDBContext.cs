@@ -22,6 +22,7 @@ namespace RacingDAL
             modelBuilder.Entity<Brake>().ToTable("Brakes");
             modelBuilder.Entity<RacingCar>().ToTable("RacingCars");
             modelBuilder.Entity<Suspention>().ToTable("Suspentions");
+            modelBuilder.Entity<Race>().ToTable("Races");
         }
     }
 }

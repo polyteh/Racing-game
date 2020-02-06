@@ -19,14 +19,16 @@ namespace RacingWeb.Controllers
     {
         //как можно сделать readonly?
         private IRaceService _raceService;
+        private readonly IRaceDBDTOService _raceceDBService;
         private readonly IMapper _mapper;
         private RaceView _newRaceView;
         //to do  inject
         [Inject]
-        public MakeRaceController(IRaceService raceService, IMapper mapper)
+        public MakeRaceController(IRaceService raceService, IMapper mapper, IRaceDBDTOService raceDBService)
         {
             _raceService = raceService;
             _mapper = mapper;
+            _raceceDBService = raceDBService;
             _newRaceView = new RaceView();
         }
         // GET: MakeRace
@@ -49,7 +51,7 @@ namespace RacingWeb.Controllers
                 return Json(raceView.CarList, JsonRequestBehavior.AllowGet);
             }
             List<CarStatusDTO> carStatusList = _raceService.GetRaceStatus();
-            carStatusList.OrderByDescending(x=>x.Place);
+            carStatusList.OrderByDescending(x => x.Place);
             return Json(_mapper.Map<IEnumerable<CarStatusView>>(carStatusList), JsonRequestBehavior.AllowGet);
         }
         //синхронный метод.При нем нет возврата в _raceService.StartRace(newBLRace) после завершения гонки
@@ -95,6 +97,22 @@ namespace RacingWeb.Controllers
             _raceService = (IRaceService)Session["raceService"];
             Debug.WriteLine($"Race from controller: {_raceService.IsRunning()}");
             return _raceService.IsRunning();
+        }
+        public async Task SaveRaceResultToDB()
+        {
+            _raceService = (IRaceService)Session["raceService"];
+            List<CarStatusDTO> carStatusList = _raceService.GetRaceStatus();
+            RaceDBDTO savedRace = new RaceDBDTO() { Name=DateTime.Now.ToString(), CarStat= MapCarsStatToDB(carStatusList) };
+            await _raceceDBService.CreateAsync(savedRace);
+        }
+        private List<CarStatDTO> MapCarsStatToDB(List<CarStatusDTO> carStatusFromRace)
+        {
+            List<CarStatDTO> carStatToDb = new List<CarStatDTO>();
+            foreach (var car in carStatusFromRace)
+            {
+                carStatToDb.Add(new CarStatDTO() { RacingCarId=car.Id, Place=(int)car.Place});
+            }
+            return carStatToDb;
         }
     }
 }

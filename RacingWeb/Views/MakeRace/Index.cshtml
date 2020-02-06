@@ -43,8 +43,8 @@
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                    WriteResponse(data);
-                    WriteLog(data);
+                WriteResponse(data);
+                WriteLog(data);
             },
             error: function (x, y, z) {
                 alert(x + '\n' + y + '\n' + z);
@@ -67,7 +67,6 @@
     }
 
     // вывод машин в таблицу
-
     function WriteResponse(cars) {
         var strResult = "<table><th>Place</th><th>Car name</th><th>Progress on distance</th>";
         $.each(cars, function (index, car) {
@@ -75,8 +74,8 @@
         });
         strResult += "</table>";
         $("#tableBlock").html(strResult);
-
     }
+
     function WriteLog(cars) {
         var strResult = $("#textArea").val();
         $.each(cars, function (index, car) {
@@ -90,7 +89,6 @@
         $("#textArea").html(strResult);
 
     }
-
     //начало гонки асинхронно
     function StartRace() {
         document.getElementById("startRace").disabled = true;
@@ -107,17 +105,12 @@
         document.getElementById("pauseRace").disabled = true;
         pauseRace();
     }
-
     function ResumeRace() {
         isPaused = false;
         document.getElementById("resumeRace").disabled = true;
         document.getElementById("pauseRace").disabled = false;
         resumeRace();
     }
-
-
-
-
 
     //обновление таблицы статусаk
     function GetStatus() {
@@ -130,6 +123,7 @@
                         document.getElementById("startRace").disabled = false;
                         document.getElementById("resumeRace").disabled = true;
                         document.getElementById("pauseRace").disabled = true;
+                        document.getElementById("saveResults").disabled = false;
                         var strRaceFinished = $("#textArea").val() //+ "Race finished"
                         $("#textArea").html(strRaceFinished)
                     }
@@ -170,6 +164,7 @@
                 GetStatus(),
         });
     }
+
     function CheckCars() {
         $.ajax({
             url: '/MakeRace/GetStatus/',
@@ -186,6 +181,20 @@
             }
         });
     };
+    function SaveResults() {
+        saveRaceResult();
+        document.getElementById("saveResults").disabled = true;
+    }
+
+    //возобновление гонки
+    var saveRaceResult = function WriteResultToDBAjax() {
+        $.ajax({
+            url: '/MakeRace/SaveRaceResultToDB',
+            type: 'GET',
+            dataType: 'json'
+        });
+    }
+
 
 
 </script>

@@ -22,6 +22,7 @@ namespace RacingWeb.Configuration
             this.Bind<ISuspentionService>().To<SuspentionService>();
             this.Bind<IRacingCarService>().To<RacingCarService>();
             this.Bind<IRaceService>().To<RaceService>();
+            this.Bind<IRaceDBDTOService>().To<RaceDbDTOService>();
             var mapperConfiguration = CreateConfiguration();
             this.Bind<MapperConfiguration>().ToConstant(mapperConfiguration).InSingletonScope();
             this.Bind<IMapper>().ToMethod(ctx => new Mapper(mapperConfiguration, type => ctx.Kernel.Get(type)));

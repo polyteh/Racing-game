@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RacingDTO.Models
 {
+    //class for calculation communication
     public class CarStatusDTO
     {
         public int Id { get; set; }

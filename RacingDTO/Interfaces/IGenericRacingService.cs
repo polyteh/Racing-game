@@ -13,6 +13,7 @@ namespace RacingDTO.Interfaces
         Task<DTOModel> FindByIdAsync(int? id);
         Task<IEnumerable<DTOModel>> GetAllAsync();
         IEnumerable<DTOModel> GetAll(Func<DTOModel, bool> predicate);
+        IEnumerable<DTOModel> GetAll();
         Task<bool> RemoveAsync(int? id);
         Task UpdateAsync(DTOModel item);
         Task<DTOModel> FindByModelAsync(string model);

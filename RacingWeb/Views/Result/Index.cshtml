@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="~/Styles/jquery.dataTables.min.css">
+</head>
+
+<body>
+    <h2>Race results</h2>
+    <table id="raceResult" class="table table-striped " style="width:100%">
+        <thead>
+            <tr>
+                <th>Racename</th>
+                <th>CarName</th>
+                <th>Place</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Racename</th>
+                <th>CarName</th>
+                <th>Place</th>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+
+</html>
+
+<script src="@Url.Content("~/Scripts/jquery.dataTables.min.js")" type="text/javascript"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $.noConflict();
+        $.ajax({
+            url: '/Result/GetResults',
+            method: 'get',
+            dataType: 'json',
+            contentType: 'text/json',
+            success: function (res) {
+                var table = $('#raceResult').dataTable({
+                    data: res,
+                    columns: [
+                        { "data": "Racename" },
+                        { "data": "CarName" },
+                        { "data": "Place" }
+                    ],
+                    bDestroy: true,
+                    iDisplayLength: 15,
+                });
+            }
+        });
+    });
+
+</script>

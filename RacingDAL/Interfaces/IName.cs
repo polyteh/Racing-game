@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace RacingDAL.Interfaces
 {
-    public interface IEntity
+   public interface IName
     {
-        int Id { get; }
+        string Name { get; }
     }
 }

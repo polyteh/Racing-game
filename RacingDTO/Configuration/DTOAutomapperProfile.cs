@@ -19,6 +19,8 @@ namespace RacingDTO.Configuration
             CreateMap<Brake,BrakeDTO>().ReverseMap();
             CreateMap<Suspention, SuspentionDTO>().ReverseMap();
             CreateMap<RacingCar, RacingCarDTO>().ReverseMap();
+            CreateMap<Race, RaceDBDTO>().ReverseMap();
+            CreateMap<CarStat, CarStatDTO>().ReverseMap();
 
             //mapping for calculation
             CreateMap<EngineWorker, EngineDTO>().ReverseMap();

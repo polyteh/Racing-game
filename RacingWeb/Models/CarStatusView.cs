@@ -5,6 +5,7 @@ using System.Web;
 
 namespace RacingWeb.Models
 {
+    //class to show current results from running service
     public class CarStatusView
     {
         public int Id { get; set; }
