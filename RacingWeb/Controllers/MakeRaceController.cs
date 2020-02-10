@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using Ninject;
 using RacingDTO.Interfaces;
 using RacingDTO.Models;
@@ -7,6 +8,7 @@ using RacingWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,7 +52,35 @@ namespace RacingWeb.Controllers
                 RaceView raceView = (RaceView)Session["raceView"];
                 return Json(raceView.CarList, JsonRequestBehavior.AllowGet);
             }
-            List<CarStatusDTO> carStatusList = _raceService.GetRaceStatus();
+            List<CarStatusDTO> carStatusList = new List < CarStatusDTO > (); 
+            _raceService.GetRaceStatus();
+
+            string path = @"d:\Education\A-Level\Temp\JSON\raceStatus.json";
+            string jsonResults;
+            Debug.WriteLine("READ JSON!!!!");
+            using (var tw = new StreamReader(path))
+            {
+                //without ToString also works
+                jsonResults= tw.ReadLine();
+                tw.Close();
+            }
+            carStatusList = JsonConvert.DeserializeObject<List<CarStatusDTO>>(jsonResults);
+
+            //string JSONresult = JsonConvert.DeserializeObject< List < CarStatusDTO >>
+            //Task task1 = new Task(() =>
+            //{
+            //    string path = @"d:\Education\A-Level\Temp\JSON\raceStatus.json";
+            //    using (var tw = new StreamReader(path))
+            //    {
+            //        //without ToString also works
+            //        tw.WriteLineAsync(JSONresult.ToString());
+            //        tw.Close();
+            //    }
+            //});
+            //task1.Start();
+
+
+
             carStatusList.OrderByDescending(x => x.Place);
             return Json(_mapper.Map<IEnumerable<CarStatusView>>(carStatusList), JsonRequestBehavior.AllowGet);
         }
