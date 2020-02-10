@@ -110,7 +110,8 @@ namespace RacingWeb.Controllers
             List<CarStatDTO> carStatToDb = new List<CarStatDTO>();
             foreach (var car in carStatusFromRace)
             {
-                carStatToDb.Add(new CarStatDTO() { RacingCarId=car.Id, Place=(int)car.Place});
+                int? place = car.IsFinished ? (int?)car.Place : null;
+                carStatToDb.Add(new CarStatDTO() { RacingCarId=car.Id, Place= place });
             }
             return carStatToDb;
         }

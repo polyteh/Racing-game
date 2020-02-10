@@ -14,7 +14,7 @@ namespace RacingDAL.Models
             public RacingCar RacingCar { get; set; }
             public int RaceId { get; set; }
             public Race Race { get; set; }
-            public int Place { get; set; }
+            public int? Place { get; set; }
         }
 
 }

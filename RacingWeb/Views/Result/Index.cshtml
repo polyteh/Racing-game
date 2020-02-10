@@ -48,7 +48,14 @@
                     columns: [
                         { "data": "Racename" },
                         { "data": "CarName" },
-                        { "data": "Place" }
+                        {
+                            "data": null, render: function (data) {
+                                if (data.Place==null) {
+                                    return "Not finished";
+                                }
+                                return data.Place;
+                            }
+                        }
                     ],
                     bDestroy: true,
                     iDisplayLength: 15,

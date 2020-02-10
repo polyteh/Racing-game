@@ -69,6 +69,10 @@
     <Compile Include="Migrations\202002031012453_raceDB.designer.cs">
       <DependentUpon>202002031012453_raceDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002101347417_nullable place.cs" />
+    <Compile Include="Migrations\202002101347417_nullable place.designer.cs">
+      <DependentUpon>202002101347417_nullable place.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brake.cs" />
     <Compile Include="Models\CarStat.cs" />
@@ -90,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002031012453_raceDB.resx">
       <DependentUpon>202002031012453_raceDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002101347417_nullable place.resx">
+      <DependentUpon>202002101347417_nullable place.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

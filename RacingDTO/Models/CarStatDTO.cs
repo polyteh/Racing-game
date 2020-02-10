@@ -14,6 +14,6 @@ namespace RacingDTO.Models
         public RacingCarDTO RacingCar { get; set; }
         public int RaceId { get; set; }
         public RaceDBDTO RaceDBDTO { get; set; }
-        public int Place { get; set; }
+        public int? Place { get; set; }
     }
 }
