@@ -243,6 +243,7 @@
     <Compile Include="Controllers\RacingCarController.cs" />
     <Compile Include="Controllers\RacingController.cs" />
     <Compile Include="Controllers\ResultController.cs" />
+    <Compile Include="Controllers\SuspentionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -455,6 +456,7 @@
     <Content Include="Views\Brake\Delete.cshtml" />
     <Content Include="Views\RacingCar\Delete.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
+    <Content Include="Views\Suspention\Index.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
