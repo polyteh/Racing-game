@@ -67,7 +67,7 @@
                 { "data": "Price", "autoWidth": true },
                 {
                     "data": "Id", "width": "50px", "render": function (data) {
-                        return '<a class="popup" href="/suspention/save/' + data + '">Edit</a>';
+                        return '<a class="popup" href="/suspention/save/' + data + '">Edit suspection</a>';
                     }
                 },
                 {
@@ -79,9 +79,9 @@
         })
         $('.tablecontainer').on('click', 'a.popup', function (e) {
             e.preventDefault();
-            OpenPopup($(this).attr('href'));
+            OpenPopup($(this).attr('href'), $(this).text());
         })
-        function OpenPopup(pageUrl) {
+        function OpenPopup(pageUrl, action) {
             var $pageContent = $('<div/>');
             $pageContent.load(pageUrl, function () {
                 $('#popupForm', $pageContent).removeData('validator');
@@ -95,7 +95,7 @@
                     autoOpen: false,
                     resizable: false,
                     model: true,
-                    title: 'Popup Dialog',
+                    title: action,
                     height: 550,
                     width: 600,
                     close: function () {

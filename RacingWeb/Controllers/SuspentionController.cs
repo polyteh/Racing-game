@@ -38,7 +38,10 @@ namespace RacingWeb.Controllers
         [HttpGet]
         public async Task<ActionResult> Save(int id)
         {
-
+            if (id==0)
+            {
+                return View(new SuspentionView());
+            }
             var suspentionDTO = await _suspentionService.FindByIdAsync(id);
             if (suspentionDTO != null)
             {
