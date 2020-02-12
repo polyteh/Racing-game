@@ -101,6 +101,17 @@ namespace RacingWeb.Controllers
             }
             return new JsonResult { Data = new { status = status } };
         }
+        [HttpGet]
+        public JsonResult CheckModelName(string name)
+        {
+            return Json(IsModelNameOccuped(name), JsonRequestBehavior.AllowGet);
+        }
+
+        private bool IsModelNameOccuped(string modelName)
+        {
+            var getItemByModel = _suspentionService.FindByModel(modelName);
+            return getItemByModel != null ? false : true;
+        }
 
     }
 }
