@@ -435,10 +435,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Engine\Details.cshtml" />
     <Content Include="Views\Engine\Index.cshtml" />
-    <Content Include="Views\Engine\Create.cshtml" />
-    <Content Include="Views\Engine\Edit.cshtml" />
     <Content Include="Views\Components\Index.cshtml" />
     <Content Include="Views\Brake\Index.cshtml" />
     <Content Include="Views\RacingCar\Index.cshtml" />
@@ -471,6 +468,7 @@
     <Content Include="Views\Suspention\Index.cshtml" />
     <Content Include="Views\Suspention\Save.cshtml" />
     <Content Include="Views\Suspention\Delete.cshtml" />
+    <Content Include="Views\Engine\Save.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

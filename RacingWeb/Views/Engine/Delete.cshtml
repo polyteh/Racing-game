@@ -1,57 +1,66 @@
 ﻿@model RacingWeb.Models.EngineView
 
-<h3>Are you sure you want to delete this engine?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Turbine)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Turbine)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Manufacurer)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Manufacurer)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="~/Styles/PopUp.css">
+</head>
+<body>
+    @using (Html.BeginForm("delete", "engine", FormMethod.Post, new { id = "popupForm" }))
+    {
         @Html.AntiForgeryToken()
+        <h3>Are you sure you want to delete this engine?</h3>
+        <div>
+            <hr />
+            @Html.HiddenFor(a => a.Id)
+            <dl class="dl-horizontal labelText">
+                <dt>
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                </dt>
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete engine" class="btn btn-primary" /> 
-            @Html.ActionLink("Back to List", "Index")
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.LabelFor(model => model.HP, htmlAttributes: new { @class = "control-label col-md-2" })
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HP)
+                </dd>
+                <dt>
+                    @Html.LabelFor(model => model.Turbine, htmlAttributes: new { @class = "control-label col-md-2" })
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Turbine)
+                </dd>
+
+                <dt>
+                    @Html.LabelFor(model => model.Manufacurer, htmlAttributes: new { @class = "control-label col-md-2" })
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Manufacurer)
+                </dd>
+
+                <dt>
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+
+            </dl>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    <input type="submit" value="Delete" class="btn btn-primary" />
+                </div>
+            </div>
         </div>
     }
-</div>
+</body>

@@ -28,66 +28,27 @@ namespace RacingWeb.Controllers
             _mapper = mapper;
         }
         // GET: Engine
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var listDTOEngine = await _engineService.GetAllAsync();
-            var listViewEngine = _mapper.Map<IEnumerable<EngineView>>(listDTOEngine);
-            return View(listViewEngine);
-        }
-
-        // GET: Engine/Details/5
-        public async Task<ActionResult> Details(int id)
-        {
-            var findEngineDTO = await _engineService.FindByIdAsync(id);
-            if (findEngineDTO != null)
-            {
-                var engine = _mapper.Map<EngineView>(findEngineDTO);
-                return View(engine);
-            }
-            return HttpNotFound();
-        }
-
-        // GET: Engine/Create
-        [Authorize]
-        public ActionResult Create()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-
             return View();
         }
-
-        private ApplicationUserManager UserManager
+        public async Task<ActionResult> GetEngines()
         {
-            get
-            {
-                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
+            var listDTOEngines = await _engineService.GetAllAsync();
+            var listViewEngines = _mapper.Map<IEnumerable<EngineView>>(listDTOEngines);
+            return Json(new { data = listViewEngines }, JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Engine/Create
-        [HttpPost]
-        public async Task<ActionResult> Create(EngineView newEngine)
-        {
-            if (ModelState.IsValid)
-            {
-                var newBLEngine = _mapper.Map<EngineDTO>(newEngine);
-                await _engineService.CreateAsync(newBLEngine);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ViewBag.Message = "Not Valid";
-                return View(newEngine);
-            }
-        }
-
-        // GET: Engine/Edit/5
-        [Authorize]
-        public async Task<ActionResult> Edit(int? id)
+        [HttpGet]
+        public async Task<ActionResult> Save(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (id == 0)
+            {
+                return View(new EngineView());
             }
             var engineDTO = await _engineService.FindByIdAsync(id);
             if (engineDTO != null)
@@ -98,25 +59,29 @@ namespace RacingWeb.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
-        // POST: Engine/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(EngineView editEngine)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Save(EngineView engine)
         {
+            bool status = false;
             if (ModelState.IsValid)
             {
-                var newBLEngine = _mapper.Map<EngineDTO>(editEngine);
-                await _engineService.UpdateAsync(newBLEngine);
-                return RedirectToAction("Index");
+                var updDTOEngine = _mapper.Map<EngineDTO>(engine);
+                if (engine.Id > 0)
+                {
+                    //Edit 
+                    await _engineService.UpdateAsync(updDTOEngine);
+                }
+                else
+                {
+                    //Save
+                    await _engineService.CreateAsync(updDTOEngine);
+                }
+                status = true;
             }
-            else
-            {
-                ViewBag.Message = "Not Valid";
-                return View(editEngine);
-            }
+            return new JsonResult { Data = new { status = status } };
         }
-
-        // GET: Engine/Delete/5
-        [Authorize]
+        [HttpGet]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,27 +95,24 @@ namespace RacingWeb.Controllers
             }
             var engineToDeleteView = _mapper.Map<EngineView>(engineToDeleteDTO);
             return View(engineToDeleteView);
-        }
 
-        // POST: Engine/Delete/5
-        [HttpPost, ActionName("Delete")]
+        }
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int? id)
+        public async Task<ActionResult> Delete(int id)
         {
+            bool status = false;
             var deleteResult = await _engineService.RemoveAsync(id);
             if (deleteResult)
             {
-                return RedirectToAction("Index");
+                status = true;
+                return new JsonResult { Data = new { status = status } };
             }
-            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            return new JsonResult { Data = new { status = status } };
         }
         [HttpGet]
         public JsonResult CheckModelName(string name)
         {
-            //var getItemByModel = _engineService.FindByModelAsync(name);
-            //bool ifModelNameExists = getItemByModel==null ? true : false;
-            // return Json(IsModelNameOccupedAsync(name), JsonRequestBehavior.AllowGet);
-
             return Json(IsModelNameOccuped(name), JsonRequestBehavior.AllowGet);
         }
         //async doestn work

@@ -80,6 +80,7 @@ namespace RacingWeb.Controllers
 
         // POST: Brake/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(BrakeView editBrake)
         {
             if (ModelState.IsValid)
