@@ -45,7 +45,7 @@
                     <div class="dropdown-menu bg-primary nav-item" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="@Url.Action("Index", "Racing")">Racing center</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "RaceCarsSelector")">Race</a>
-                        <a class="dropdown-item" href="#" aria-disabled="true">View result</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Result")">View result</a>
                     </div>
                 </li>
             </ul>
@@ -54,10 +54,10 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
-        @*<hr />*@
-        @*<footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>*@
+        <hr/>
+        <footer>
+                <p>&copy; @DateTime.Now.Year - by Ivan Prevo</p>
+        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
@@ -66,33 +66,3 @@
 </body>
 </html>
 
-<script type="text/javascript">
-
-
-    function onWindowClosing() {
-        if (window.event.clientX < 0 || window.event.clientY < 0) {
-            $.ajax({
-                type: "POST",
-                url: "/Account/OnWindowClosing",
-            });
-        }
-    };
-
-    function onKeydown(evt) {
-        if (evt != undefined && evt.altKey && evt.keyCode == 115) //Alt + F4
-        {
-            $.ajax({
-                type: "POST",
-                url: "/Account/OnWindowClosing"
-            });
-        }
-    };
-
-    window.onbeforeunload = onWindowClosing;
-    window.document.onkeydown = onKeydown;
-
-    function Login() {
-
-    }
-
-</script>

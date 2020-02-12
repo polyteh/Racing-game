@@ -40,6 +40,7 @@ namespace RacingWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> Save(int? id)
         {
             if (id == null)
@@ -82,6 +83,7 @@ namespace RacingWeb.Controllers
             return new JsonResult { Data = new { status = status } };
         }
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)

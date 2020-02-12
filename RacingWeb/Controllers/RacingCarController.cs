@@ -38,71 +38,57 @@ namespace RacingWeb.Controllers
             var listViewCars = _mapper.Map<IEnumerable<RacingCarView>>(listDTOCars);
             return View(listViewCars);
         }
-
-        // GET: RacingCar/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> GetCars()
         {
-            return View();
+            var listDTOCars = await _racingCarService.GetAllAsync();
+            var listViewCars = _mapper.Map<IEnumerable<RacingCarView>>(listDTOCars);
+            return Json(new { data = listViewCars }, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: RacingCar/Create
-        public async Task<ActionResult> Create()
-        {
-            await MakeDropDownMenuLists();
-            return View();
-        }
-
-        // POST: RacingCar/Create
-        [HttpPost]
-        public async Task<ActionResult> Create(RacingCarView newCar)
-        {
-            if (ModelState.IsValid)
-            {
-                var newBLCar = _mapper.Map<RacingCarDTO>(newCar);
-                await _racingCarService.CreateAsync(newBLCar);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ViewBag.Message = "Not Valid";
-                return View(newCar);
-            }
-        }
-
-        // GET: RacingCar/Edit/5
-        [Authorize]
-        public async Task<ActionResult> Edit(int? id)
+        [HttpGet]
+        public async Task<ActionResult> Save(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var carDTO = await _racingCarService.FindByIdAsync(id);
-            if (carDTO != null)
+            await MakeDropDownMenuLists();
+            if (id == 0)
             {
-                await MakeDropDownMenuLists();
-                var carView = _mapper.Map<RacingCarView>(carDTO);
-                return View(carView);
+                return View(new RacingCarView());
+            }
+            var racingCarDTO = await _racingCarService.FindByIdAsync(id);
+            if (racingCarDTO != null)
+            {
+                var racingCarView = _mapper.Map<RacingCarView>(racingCarDTO);
+                return View(racingCarView);
             }
             return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
-        // POST: RacingCar/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(RacingCarView editCar)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Save(RacingCarView racingCar)
         {
+            bool status = false;
             if (ModelState.IsValid)
             {
-                var editBLCar = _mapper.Map<RacingCarDTO>(editCar);
-                await _racingCarService.UpdateAsync(editBLCar);
-                return RedirectToAction("Index");
+                var updDTORacingCar = _mapper.Map<RacingCarDTO>(racingCar);
+                if (racingCar.Id > 0)
+                {
+                    //Edit 
+                    await _racingCarService.UpdateAsync(updDTORacingCar);
+                }
+                else
+                {
+                    //Save
+                    await _racingCarService.CreateAsync(updDTORacingCar);
+                }
+                status = true;
             }
-            else
-            {
-                ViewBag.Message = "Not Valid";
-                return View(editCar);
-            }
+            return new JsonResult { Data = new { status = status } };
         }
+
 
         // GET: RacingCar/Delete/5
         public async Task<ActionResult> Delete(int? id)
@@ -126,12 +112,14 @@ namespace RacingWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id, FormCollection collection)
         {
+            bool status = false;
             var deleteResult = await _racingCarService.RemoveAsync(id);
             if (deleteResult)
             {
-                return RedirectToAction("Index");
+                status = true;
+                return new JsonResult { Data = new { status = status } };
             }
-            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            return new JsonResult { Data = new { status = status } };
         }
         //как блин, это работает (SelectList)???
         //данные для DropList

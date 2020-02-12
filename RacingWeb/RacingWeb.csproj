@@ -439,8 +439,6 @@
     <Content Include="Views\Components\Index.cshtml" />
     <Content Include="Views\Brake\Index.cshtml" />
     <Content Include="Views\RacingCar\Index.cshtml" />
-    <Content Include="Views\RacingCar\Create.cshtml" />
-    <Content Include="Views\RacingCar\Edit.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -469,6 +467,7 @@
     <Content Include="Views\Suspention\Save.cshtml" />
     <Content Include="Views\Suspention\Delete.cshtml" />
     <Content Include="Views\Engine\Save.cshtml" />
+    <Content Include="Views\RacingCar\Save.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

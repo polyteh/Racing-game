@@ -97,10 +97,5 @@ namespace RacingWeb.Controllers
            // return RedirectToAction("Index","Home");
             return Redirect(ReturnUrl);
         }
-        [HttpPost]
-        public void OnWindowClosing()
-        {
-            AuthenticationManager.SignOut();    
-        }
     }
 }
