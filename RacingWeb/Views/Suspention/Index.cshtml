@@ -64,7 +64,7 @@
                 { "data": "Name", "autoWidth": true },
                 { "data": "RigidityKoef", "autoWidth": true },
                 { "data": "Manufacurer", "autoWidth": true },
-                { "data": "Price", "autoWidth": true },
+                { "data": "Price", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ),"autoWidth": true },
                 {
                     "data": "Id", "width": "50px", "render": function (data) {
                         return '<a class="popup" href="/suspention/save/' + data + '">Edit suspection</a>';
