@@ -21,6 +21,7 @@ namespace RacingDTO.Configuration
             this.Bind<IGeneralDBRepository<RacingCar>>().To<CarRacingRepository>();
             this.Bind<IGeneralDBRepository<Engine>>().To<EngineRacingRepository>();
             this.Bind<IGeneralDBRepository<Brake>>().To<BrakesRacingRepository>();
+            this.Bind<IGeneralDBRepository<Suspention>>().To<SuspentionRacingRepository>();
             this.Bind<IGeneralDBRepository<Race>>().To<RaceRepository>();
             this.Bind(typeof(IGeneralDBRepository<>)).To(typeof(GenericRacingRepository<>));
         }

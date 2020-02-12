@@ -420,6 +420,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Styles\jquery.dataTables.min.css" />
+    <Content Include="Styles\PopUp.css" />
     <Content Include="Styles\Race.css" />
     <Content Include="Styles\RacingCarEditor.css" />
     <Content Include="Web.config" />
@@ -469,6 +470,7 @@
     <Content Include="Views\Result\Index.cshtml" />
     <Content Include="Views\Suspention\Index.cshtml" />
     <Content Include="Views\Suspention\Save.cshtml" />
+    <Content Include="Views\Suspention\Delete.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

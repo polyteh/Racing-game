@@ -22,7 +22,7 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>RigidityKoef</th>
+                    <th>Rigidity Coefficient</th>
                     <th>Manufacurer</th>
                     <th>Price</th>
                     <th>Edit</th>
@@ -32,7 +32,7 @@
             <tfoot>
                 <tr>
                     <th>Name</th>
-                    <th>RigidityKoef</th>
+                    <th>Rigidity Coefficient</th>
                     <th>Manufacurer</th>
                     <th>Price</th>
                     <th>Edit</th>
@@ -64,10 +64,10 @@
                 { "data": "Name", "autoWidth": true },
                 { "data": "RigidityKoef", "autoWidth": true },
                 { "data": "Manufacurer", "autoWidth": true },
-                { "data": "Price", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ),"autoWidth": true },
+                { "data": "Price", render: $.fn.dataTable.render.number(',', '.', 0, '$'), "autoWidth": true },
                 {
                     "data": "Id", "width": "50px", "render": function (data) {
-                        return '<a class="popup" href="/suspention/save/' + data + '">Edit suspection</a>';
+                        return '<a class="popup" href="/suspention/save/' + data + '">Edit</a>';
                     }
                 },
                 {
@@ -88,6 +88,7 @@
                 $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
                 $.validator.unobtrusive.parse('form');
             });
+
             $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
                 .html($pageContent)
                 .dialog({
@@ -97,7 +98,7 @@
                     model: true,
                     title: action,
                     height: 550,
-                    width: 600,
+                    width: 700,
                     close: function () {
                         $dialog.dialog('destroy').remove();
                     }
@@ -114,12 +115,18 @@
                             $dialog.dialog('close');
                             oTable.ajax.reload();
                         }
+                        else {
+                            if (action == 'Delete') {
+                                alert("Can't delete item, because it has dependencies");
+                            }
+
+                        }
                     }
                 })
                 e.preventDefault();
             })
+
             $dialog.dialog('open');
         }
-
     })
 </script>

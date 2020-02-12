@@ -32,5 +32,12 @@ namespace RacingDAL
             var itemBuId =  _dbSet.Include(x => x.Engine).Include(x => x.Brake).Include(x => x.Suspention).SingleOrDefault<RacingCar>(e => e.Id == id);
             return itemBuId;
         }
+        public override async Task<bool> RemoveAsync(int? id)
+        {
+            var itemBuId = _dbSet.SingleOrDefault(e => e.Id == id);
+            _dbSet.Remove(itemBuId);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

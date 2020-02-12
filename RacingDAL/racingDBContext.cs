@@ -10,8 +10,8 @@ namespace RacingDAL
 {
     public class RacingDBContext : DbContext
     {
-       // public RacingDBContext() : base("Racing")
-        public RacingDBContext() : base(@"Data Source =.\IPSQLSERVER; Initial Catalog = Racing; Integrated Security = True")
+        public RacingDBContext() : base("Racing")
+        //public RacingDBContext() : base(@"Data Source =.\IPSQLSERVER; Initial Catalog = Racing; Integrated Security = True")
         {
             Database.SetInitializer<RacingDBContext>(new CreateDatabaseIfNotExists<RacingDBContext>());
             Configuration.LazyLoadingEnabled = false;

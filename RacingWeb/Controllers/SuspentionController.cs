@@ -72,7 +72,35 @@ namespace RacingWeb.Controllers
             }
             return new JsonResult { Data = new { status = status } };
         }
+        [HttpGet]
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var suspentionToDeleteDTO = await _suspentionService.FindByIdAsync(id);
+            if (suspentionToDeleteDTO == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            var suspentionToDeleteView = _mapper.Map<SuspentionView>(suspentionToDeleteDTO);
+            return View(suspentionToDeleteView);
 
+        }
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            bool status = false;
+            var deleteResult = await _suspentionService.RemoveAsync(id);
+            if (deleteResult)
+            {
+                status = true;
+                return new JsonResult { Data = new { status = status } };
+            }
+            return new JsonResult { Data = new { status = status } };
+        }
 
     }
 }
