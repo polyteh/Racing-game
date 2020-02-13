@@ -125,7 +125,8 @@
                         document.getElementById("pauseRace").disabled = true;
                         document.getElementById("saveResults").disabled = false;
                         var strRaceFinished = $("#textArea").val() //+ "Race finished"
-                        $("#textArea").html(strRaceFinished)
+                        $("#textArea").html(strRaceFinished);
+                        alert("Race finished");
                     }
                     var strRaceFinished = $("#textArea").val() + "Race paused" + '\n'
                     clearInterval(timerFunc)

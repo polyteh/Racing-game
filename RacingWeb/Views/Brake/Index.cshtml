@@ -1,51 +1,20 @@
-﻿@model IEnumerable<RacingWeb.Models.BrakeView>
+﻿@using Microsoft.AspNet.Identity
 
-@{
-    ViewBag.Title = "Index";
+<head>
+    <link href="~/Styles/Index.css" rel="stylesheet" type="text/css" />
+</head>
+
+
+@if (Request.IsAuthenticated)
+{
+    <div class="admin">
+        <h4>Admin mode</h4>
+    </div>
+
+    @Html.Partial("IndexAdmin")
+
 }
-
-<h2>Brakes manager</h2>
-<p>
-    <a href="@Url.Action("Create", "Brake")" class="btn btn-primary">Create new brakes</a>
-</p>
-
-<table class="table table-dark">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EffecientKoef)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Manufacurer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EffecientKoef)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Manufacurer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
-
-</table>
+else
+{
+    @Html.Partial("IndexCommon")
+}

@@ -23,6 +23,7 @@ namespace RacingWeb.Models
         public string Manufacurer { get; set; }
         [Required]
         [DataType(DataType.Currency)]
+        [Range(110, 200, ErrorMessage = "Price is out of range. Should be 110..200")]
         public decimal Price { get; set; }
         ICollection<RacingCarView> RacingCar { get; set; }
     }

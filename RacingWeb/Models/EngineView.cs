@@ -16,7 +16,7 @@ namespace RacingWeb.Models
         [Remote("CheckModelName", "Engine", ErrorMessage = "Model name already exists")]
         public string Name { get; set; }
         [Required]
-        [Range(140, 300, ErrorMessage = "HP is out of range. Should be 140..320")]
+        [Range(140, 340, ErrorMessage = "HP is out of range. Should be 140..340")]
         public int HP { get; set; }
         public bool Turbine { get; set; }
         [Required]
@@ -24,7 +24,7 @@ namespace RacingWeb.Models
         public string Manufacurer { get; set; }
         [Required]
         [DataType(DataType.Currency)]
-        [Range(140, 300, ErrorMessage = "Price is out of range. Should be 600..2000")]
+        [Range(600, 2000, ErrorMessage = "Price is out of range. Should be 600..2000")]
         public decimal Price { get; set; }
         ICollection<RacingCarView> RacingCar { get; set; }
     }

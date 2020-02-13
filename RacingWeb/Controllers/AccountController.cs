@@ -94,8 +94,10 @@ namespace RacingWeb.Controllers
         public ActionResult Logout(string ReturnUrl)
         {
             AuthenticationManager.SignOut();
-           // return RedirectToAction("Index","Home");
+            // return RedirectToAction("Index","Home");
             return Redirect(ReturnUrl);
         }
+
     }
+
 }
